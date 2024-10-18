@@ -1,4 +1,6 @@
-export const Home = () => {
+import React from "react";
+
+const Home = () => {
   return (
     <main className="h-screen grid place-items-center">
       <div className="flex flex-col gap-4 text-center">
