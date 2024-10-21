@@ -1,4 +1,5 @@
 import { ModeToggle } from "@/components/ModeToggle";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export const Header = () => {
@@ -9,9 +10,13 @@ export const Header = () => {
       </Link>
       <div className="flex items-center gap-4">
         <nav>
-          <ul className="flex gap-4">
-            <Link href="/">Home</Link>
-            <Link href="/debug">Debug</Link>
+          <ul className="flex">
+            <Button variant="link" asChild>
+              <Link href="/">Home</Link>
+            </Button>
+            <Button variant="link" asChild>
+              <Link href="/debug">Debug</Link>
+            </Button>
           </ul>
         </nav>
         <ModeToggle />
