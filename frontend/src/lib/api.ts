@@ -1,17 +1,5 @@
+import { Article, Post } from "@/lib/type";
 import axios from "axios";
-
-export type Post = {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-};
-
-export type Article = {
-  id: number;
-  title: string;
-  content: string;
-};
 
 export const fetchPosts = async (): Promise<Post[]> => {
   const res: Post[] = await axios

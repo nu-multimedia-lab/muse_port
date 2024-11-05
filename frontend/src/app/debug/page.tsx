@@ -1,7 +1,8 @@
 import { PostCard } from "@/components/PostCard";
 import { PostCardSkeleton } from "@/components/skeleton/PostCardSkeleton";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Article, fetchArticles, fetchPosts, Post } from "@/lib/api";
+import { fetchArticles, fetchPosts } from "@/lib/api";
+import { Article, Post } from "@/lib/type";
 import React, { Suspense } from "react";
 
 const Articles = async () => {
