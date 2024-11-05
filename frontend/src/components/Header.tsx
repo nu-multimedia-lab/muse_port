@@ -18,6 +18,9 @@ export const Header = () => {
             <Button variant="link" asChild>
               <Link href="/debug">Debug</Link>
             </Button>
+            <Button variant="link" asChild>
+              <Link href="/login">Login</Link>
+            </Button>
           </ul>
         </nav>
         <ModeToggle />
