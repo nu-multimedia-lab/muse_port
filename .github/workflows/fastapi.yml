@@ -30,7 +30,7 @@ jobs:
           cd backend
           sam package \
             --template-file template.yaml \
-            --s3-bucket your-s3-bucket-name \
+            --s3-bucket muse-port-deploy \
             --output-template-file packaged.yaml
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
