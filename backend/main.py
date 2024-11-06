@@ -2,12 +2,13 @@ import asyncio
 from typing import List, Union
 
 from fastapi import FastAPI
+from mangum import Mangum
 
 from dummyDB import articles
 from schema import Article
 
 app = FastAPI()
-
+handler = Mangum(app)
 
 @app.get("/")
 async def read_root() -> dict:
