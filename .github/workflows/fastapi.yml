@@ -1,0 +1,58 @@
+# .github/workflows/deploy.yml
+name: Deploy FastAPI to AWS Lambda
+
+on:
+  push:
+    branches:
+      - test-deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -t .
+
+      - name: Install AWS SAM CLI
+        uses: aws-actions/setup-sam@v2
+
+      - name: Check SAM CLI Version
+        run: |
+          sam --version
+
+      - name: Package with AWS SAM
+        run: |
+          cd backend
+          sam package \
+            --template-file template.yaml \
+            --s3-bucket muse-port-deploy \
+            --output-template-file packaged.yaml
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-northeast-1
+
+      - name: Deploy with AWS SAM
+        run: |
+          cd backend
+          sam deploy \
+            --template-file packaged.yaml \
+            --stack-name fastapi-lambda-stack \
+            --capabilities CAPABILITY_IAM \
+            --region ap-northeast-1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-northeast-1
