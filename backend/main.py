@@ -26,3 +26,8 @@ async def get_article(article_id: int) -> Union[Article, dict]:
         if article["id"] == article_id:
             return article
     return {"message": "Article not found"}
+
+@app.post("/article")
+async def create_article(article: Article) -> Article:
+    articles.append(article)
+    return article
