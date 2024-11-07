@@ -20,6 +20,7 @@ app.add_middleware(
 
 handler = Mangum(app)
 
+
 @app.get("/")
 async def read_root() -> dict:
     return {"message": "Connection successful"}
@@ -37,6 +38,7 @@ async def get_article(article_id: int) -> Union[Article, dict]:
         if article["id"] == article_id:
             return article
     return {"message": "Article not found"}
+
 
 @app.post("/article")
 async def create_article(article: Article) -> Article:
