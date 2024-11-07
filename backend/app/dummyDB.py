@@ -1,6 +1,6 @@
 from typing import List
 
-from schema import Article
+from app.schemas.article import Article
 
 # ダミーの記事データ
 articles: List[Article] = [
