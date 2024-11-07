@@ -1,6 +1,8 @@
 import { Article, Post } from "@/lib/type";
 import axios from "axios";
 
+const backendUrl: string = `${process.env.BACKEND_URL}`;
+
 export const fetchPosts = async (): Promise<Post[]> => {
   const res: Post[] = await axios
     .get("https://jsonplaceholder.typicode.com/posts")
@@ -17,7 +19,7 @@ export const fetchPostById = async (id: number): Promise<Post> => {
 
 export const fetchArticles = async (): Promise<Article[]> => {
   const res: Article[] = await axios
-    .get("http://localhost:8000/articles")
+    .get(`${backendUrl}/articles`)
     .then((res) => res.data);
   return res;
 };
