@@ -3,7 +3,7 @@ Resources:
   FastApiFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: main.handler
+      Handler: app.main.handler
       Runtime: python3.12
       CodeUri: .
       MemorySize: 128

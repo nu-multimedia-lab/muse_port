@@ -4,7 +4,7 @@ name: Deploy FastAPI to AWS Lambda
 on:
   push:
     branches:
-      - test-deploy
+      - main
 
 jobs:
   deploy:
