@@ -52,6 +52,7 @@ const Debug = async () => {
       </div>
       <div className="flex flex-col items-center gap-4 p-16">
         <h1 className="text-4xl font-extrabold">Articles</h1>
+        <h3 className="text-2xl font-bold">AWSからのデータフェッチ検証用</h3>
         <Suspense fallback={<Skeleton className="w-64 h-16 bg-amber-400" />}>
           <Articles />
         </Suspense>
