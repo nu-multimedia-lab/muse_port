@@ -17,7 +17,7 @@ export const fetchPostById = async (id: number): Promise<Post> => {
 
 export const fetchArticles = async (): Promise<Article[]> => {
   const res: Article[] = await axios
-    .get("http://localhost:8000/articles")
+    .get("http://127.0.0.1:8000/articles")
     .then((res) => res.data);
   return res;
 };
