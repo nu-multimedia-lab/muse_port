@@ -51,7 +51,7 @@ jobs:
             --template-file packaged.yaml \
             --stack-name fastapi-lambda-stack \
             --capabilities CAPABILITY_IAM \
-            --region ap-northeast-1
+            --region ${{ secrets.AWS_REGION }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
