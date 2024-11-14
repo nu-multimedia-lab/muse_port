@@ -11,8 +11,9 @@ MUSE PORTは長崎大学マルチメディア研究会の部員が製作した�
 ### フロントエンド
 
 Next.js
-GitHub Pagesにて公開。
+Vercelにデプロイ
 
 ### バックエンド
 
 FastAPI
+AWS Lambdaにデプロイ
