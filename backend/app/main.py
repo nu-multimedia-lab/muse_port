@@ -1,9 +1,12 @@
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
 
 from app.routes.article import router as article_router
 from app.routes.user import router as user_router
+
+load_dotenv()
 
 app = FastAPI()
 
