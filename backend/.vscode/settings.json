@@ -1,5 +1,13 @@
 {
   "files.exclude": {
     "**/__pycache__": true
-  }
+  },
+  "cSpell.words": [
+    "boto3",
+    "dotenv",
+    "fastapi",
+    "mangum",
+    "pydantic",
+    "shortuuid"
+  ]
 }

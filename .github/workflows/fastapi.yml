@@ -37,12 +37,12 @@ jobs:
           cd backend
           sam package \
             --template-file template.yaml \
-            --s3-bucket muse-port-deploy \
+            --s3-bucket ${{ secrets.AWS_BUCKET_NAME }} \
             --output-template-file packaged.yaml
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ap-northeast-1
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
 
       - name: Deploy with AWS SAM
         run: |
@@ -51,8 +51,8 @@ jobs:
             --template-file packaged.yaml \
             --stack-name fastapi-lambda-stack \
             --capabilities CAPABILITY_IAM \
-            --region ap-northeast-1
+            --region ${{ secrets.AWS_REGION }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ap-northeast-1
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
