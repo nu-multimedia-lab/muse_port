@@ -9,5 +9,6 @@
     "mangum",
     "pydantic",
     "shortuuid"
-  ]
+  ],
+  "cSpell.ignorePaths": [".env", ".git", ".vscode"]
 }
