@@ -1,5 +1,5 @@
-import { fetchUsers } from "@/lib/api";
-import { User } from "@/lib/type";
+import { fetchUsers } from "@/lib/apis/user";
+import { User } from "@/lib/types";
 
 export const Users = async () => {
   try {
