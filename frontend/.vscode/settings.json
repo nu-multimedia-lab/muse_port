@@ -3,5 +3,6 @@
   "javascript.preferences.importModuleSpecifier": "non-relative",
   "files.associations": {
     "*.css": "tailwindcss"
-  }
+  },
+  "cSpell.ignorePaths": ["package-lock.json", "node_modules", ".vscode", ".env"]
 }
