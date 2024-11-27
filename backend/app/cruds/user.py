@@ -1,18 +1,21 @@
 from shortuuid import ShortUUID
 
+import datetime
+
 from app.cruds import CRUD
-from app.schemas.user import User, UserCreate, UserUpdate
+from app.schemas.user import User, UserUpdate
 
 
 class UserCRUD(CRUD):
     def __init__(self) -> None:
-        super().__init__("users")
+        super().__init__("user_test") # ハードコーディングしているので注意
 
-    def create_user(self, user_create: UserCreate) -> None:
-        user_create.id = ShortUUID().random(length=6)
+    def create_user(self, new_user: User) -> None:
+        new_user.user_id = ShortUUID().random(length=6)
+        new_user.created_at = datetime.datetime.now().isoformat() # isoformat() で日時を文字列に変換
 
         try:
-            self.table.put_item(Item=user_create.model_dump())
+            self.table.put_item(Item=new_user.model_dump())
         except Exception as e:
             raise ValueError(e)
 
