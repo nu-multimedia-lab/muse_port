@@ -16,7 +16,7 @@ async def get_users() -> list[User]:
         raise HTTPException(status_code=400, detail=str(e))
 
 
-@router.post("/")
+@router.post("/", status_code=201)
 async def create_user(new_user: User) -> User:
     try:
         crud.create_user(new_user)

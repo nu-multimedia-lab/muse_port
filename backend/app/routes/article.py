@@ -17,20 +17,18 @@ async def get_articles() -> List[Article]:
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+@router.post("/", status_code=201)
+async def create_article(new_article: Article) -> Article:
+    try:
+        crud.create_article(new_article)
+        return new_article
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 @router.get("/{article_id}")
 async def get_article(article_id: str) -> Article:
     try:
         article = crud.get_article(article_id)
         return article
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-
-
-@router.post("/")
-async def create_article(new_article: Article) -> Article:
-    try:
-        crud.create_article(new_article)
-        return new_article
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
