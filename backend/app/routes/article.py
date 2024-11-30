@@ -1,29 +1,36 @@
-import asyncio
+from fastapi import APIRouter, HTTPException
 from typing import List, Union
 
 from fastapi import APIRouter
 
-from app.dummyDB import articles
+from app.cruds.article import ArticleCRUD
 from app.schemas.article import Article
 
 router = APIRouter()
-
+crud = ArticleCRUD()
 
 @router.get("/")
 async def get_articles() -> List[Article]:
-    await asyncio.sleep(5)
-    return articles
+    try:
+        articles = crud.get_all_articles()
+        return articles
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.get("/{article_id}")
-async def get_article(article_id: int) -> Union[Article, dict]:
-    for article in articles:
-        if article["id"] == article_id:
-            return article
-    return {"message": "Article not found"}
+async def get_article(article_id: str) -> Article:
+    try:
+        article = crud.get_article(article_id)
+        return article
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.post("/")
-async def create_article(article: Article) -> Article:
-    articles.append(article)
-    return article
+async def create_article(new_article: Article) -> Article:
+    try:
+        crud.create_article(new_article)
+        return new_article
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
