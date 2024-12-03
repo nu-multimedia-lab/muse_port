@@ -1,9 +1,9 @@
-import Loading from "@/app/members/[slug]/loading";
-import { MemberDetail } from "@/app/members/[slug]/MemberDetail";
+import Loading from "@/app/members/[userId]/loading";
+import { MemberDetail } from "@/app/members/[userId]/MemberDetail";
 import React, { Suspense } from "react";
 
-const MemberPage = ({ params }: { params: { slug: string } }) => {
-  const userId: string = params.slug;
+const MemberPage = ({ params }: { params: { userId: string } }) => {
+  const userId: string = params.userId;
 
   return (
     <div className="min-h-screen py-32">
