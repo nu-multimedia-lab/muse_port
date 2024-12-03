@@ -13,7 +13,7 @@ export const MemberList = async () => {
           <div key={user.id}>
             <Link href={`/members/${user.id}`}>
               <UserCard
-                imgSrc="null"
+                imgSrc={undefined}
                 userId={user.id}
                 userName={user.username}
                 bio={user.bio}
