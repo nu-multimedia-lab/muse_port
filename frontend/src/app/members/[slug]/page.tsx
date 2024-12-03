@@ -6,9 +6,9 @@ const MemberPage = ({ params }: { params: { slug: string } }) => {
   const userId: string = params.slug;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen py-32">
       <div className="flex flex-col gap-8">
-        <h1 className="text-4xl font-extrabold mt-32 mx-auto">Member Detail</h1>
+        <h1 className="text-4xl font-extrabold mx-auto">Member Detail</h1>
         <div className="mx-auto min-w-[720px]">
           <Suspense fallback={<Loading />}>
             <MemberDetail userId={userId} />
