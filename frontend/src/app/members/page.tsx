@@ -5,7 +5,7 @@ import React, { Suspense } from "react";
 const MembersPage = () => {
   return (
     <main>
-      <div className="min-h-screen py-32 bg-neutral-50 dark:bg-neutral-900">
+      <div className="min-h-screen py-32">
         <div className="flex flex-col gap-8">
           <h1 className="text-4xl font-extrabold mx-auto">Members</h1>
           <div className="mx-auto">
