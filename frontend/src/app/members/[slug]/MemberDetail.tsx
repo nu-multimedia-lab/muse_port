@@ -3,8 +3,6 @@ import { getUser } from "@/lib/apis/user";
 import { User } from "@/lib/types";
 import { notFound } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-
 type UserProps = {
   userId: string;
 };

@@ -3,8 +3,6 @@ import { getAllUsers } from "@/lib/apis/user";
 import { User } from "@/lib/types";
 import Link from "next/link";
 
-export const dynamic = "force-dynamic";
-
 export const MemberList = async () => {
   try {
     const users: User[] = await getAllUsers();
