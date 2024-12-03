@@ -11,9 +11,9 @@ export const MemberDetail = async (props: UserProps) => {
   try {
     const user: User = await getUser(props.userId);
 
-    return (
+    return await (
       <UserCard
-        imgSrc="null"
+        imgSrc={undefined}
         userId={user.id}
         userName={user.username}
         bio={user.bio}
