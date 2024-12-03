@@ -1,7 +1,12 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
 const Loading = () => {
-  return <Skeleton className="w-64 h-16 bg-amber-400" />;
+  return (
+    <div className="">
+      {[...Array(16)].map((_, index) => (
+        <Skeleton key={index} className="w-[560px] h-[240px] mx-auto mt-8" />
+      ))}
+    </div>
+  );
 };
-
 export default Loading;
