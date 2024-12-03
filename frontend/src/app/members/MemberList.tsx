@@ -1,27 +1,29 @@
+import { UserCard } from "@/components/elements/UserCard";
 import { getAllUsers } from "@/lib/apis/user";
 import { User } from "@/lib/types";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
-export const AllUsers = async () => {
+export const MemberList = async () => {
   try {
     const users: User[] = await getAllUsers();
+
     return (
-      <ul>
+      <div className="grid grid-cols-1 gap-8 w-[640px]">
         {users.map((user) => (
-          <div
-            key={user.id}
-            className="m-4 p-4 bg-zinc-200 rounded-md text-black"
-          >
+          <div key={user.id}>
             <Link href={`/members/${user.id}`}>
-              <h2>id: {user.id}</h2>
-              <h2>username: {user.username}</h2>
-              <p>bio: {user.bio === null ? "なし" : user.bio}</p>
+              <UserCard
+                imgSrc="null"
+                userId={user.id}
+                userName={user.username}
+                bio={user.bio}
+              />
             </Link>
           </div>
         ))}
-      </ul>
+      </div>
     );
   } catch (error) {
     return (
