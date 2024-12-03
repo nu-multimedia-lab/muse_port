@@ -9,16 +9,18 @@ type UserCardProps = {
 
 export const UserCard = (props: UserCardProps) => {
   return (
-    <div className="grid grid-cols-1 gap-6 p-8 rounded-3xl shadow-md border-2">
+    <div className="grid grid-cols-1 gap-6 p-8 rounded-3xl shadow-md border-2 bg-white dark:bg-neutral-900">
       <div className="flex items-center gap-6">
-        <Avatar className="h-24 w-24">
-          <AvatarImage
-            src={props.imgSrc == undefined ? "null" : props.imgSrc}
-          />
-          <AvatarFallback>{props.userId[0]}</AvatarFallback>
+        <Avatar className="h-24 w-24 border-2">
+          <AvatarImage src={props.imgSrc} />
+          <AvatarFallback className="text-3xl uppercase">
+            {props.userName[0] + props.userName[1]}
+          </AvatarFallback>
         </Avatar>
         <div className="grid grid-cols-1 gap-1">
-          <p className="text-sm font-bold">@{props.userId}</p>
+          <p className="text-sm font-bold text-neutral-600 dark:text-neutral-400">
+            @{props.userId}
+          </p>
           <p className="text-2xl font-black">{props.userName}</p>
         </div>
       </div>
