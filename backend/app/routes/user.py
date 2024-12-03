@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
 from app.cruds.user import UserCRUD
-from app.schemas.user import User, UserCreate, UserUpdate
+from app.schemas.user import User, UserUpdate
 
 router = APIRouter()
 crud = UserCRUD()
@@ -16,11 +16,11 @@ async def get_users() -> list[User]:
         raise HTTPException(status_code=400, detail=str(e))
 
 
-@router.post("/")
-async def create_user(user_create: UserCreate) -> User:
+@router.post("/", status_code=201)
+async def create_user(new_user: User) -> User:
     try:
-        crud.create_user(user_create)
-        return user_create
+        crud.create_user(new_user)
+        return new_user
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
