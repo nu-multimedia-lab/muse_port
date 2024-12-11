@@ -24,6 +24,7 @@ class ArticleCRUD(CRUD):
 
         try:
             self.table.put_item(Item=new_article.model_dump())
+            return None
         except Exception as e:
             raise ValueError(e)
 
@@ -40,3 +41,25 @@ class ArticleCRUD(CRUD):
     def get_all_articles(self) -> list[Article]:
         response: dict = self.table.scan()
         return [Article.model_validate(item) for item in response["Items"]]
+
+    def update_article(self, id: str, article_update: Article) -> Article:
+        try:
+            article: Article = self.get_article(id)
+            article.updated_at = datetime.now(ZoneInfo(self.time_zone)).isoformat(
+                timespec="seconds"
+            )  # isoformat() で日時を文字列に変換
+
+            updated_article = article.model_copy(
+                update=article_update.model_dump(exclude_unset=True)
+            )
+            self.table.put_item(Item=updated_article.model_dump())
+            return updated_article
+        except Exception as e:
+            raise ValueError(e)
+
+    def delete_article(self, id: str) -> None:
+        try:
+            self.table.delete_item(Key={self.primary_key: id})
+            return None
+        except Exception as e:
+            raise ValueError(e)

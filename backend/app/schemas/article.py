@@ -11,3 +11,9 @@ class Article(BaseModel):
     tags: Optional[list[str]] = None
     title: str
     content: str
+
+
+class ArticleUpdate(BaseModel):
+    tags: Optional[list[str]] = None
+    title: Optional[str] = None
+    content: Optional[str] = None
