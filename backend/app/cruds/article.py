@@ -1,30 +1,38 @@
-from shortuuid import ShortUUID
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
-import datetime
+from shortuuid import ShortUUID
 
 from app.cruds import CRUD
 from app.schemas.article import Article
 
 
 class ArticleCRUD(CRUD):
+    table_name = "articles"
+    primary_key = "id"
+    time_zone = "Asia/Tokyo"
+    id_length = 12
+
     def __init__(self) -> None:
-        super().__init__("article_test") # ハードコーディングしているので注意
+        super().__init__(self.table_name)
 
     def create_article(self, new_article: Article) -> None:
-        new_article.article_id = ShortUUID().random(length=6)
-        new_article.created_at = datetime.datetime.now().isoformat() # isoformat() で日時を文字列に変換
+        new_article.id = ShortUUID().random(length=self.id_length)
+        new_article.created_at = datetime.now(ZoneInfo(self.time_zone)).isoformat(
+            timespec="seconds"
+        )  # isoformat() で日時を文字列に変換
 
         try:
             self.table.put_item(Item=new_article.model_dump())
         except Exception as e:
             raise ValueError(e)
 
-    def get_article(self, article_id: str) -> Article:
+    def get_article(self, id: str) -> Article:
         try:
-            response: dict = self.table.get_item(Key={"article_id": article_id})
+            response: dict = self.table.get_item(Key={self.primary_key: id})
             item = response.get("Item")
             if not item:
-                raise ValueError(f"ID {article_id} の記事は存在しません")
+                raise ValueError(f"ID {id} の記事は存在しません")
             return Article.model_validate(item)
         except Exception as e:
             raise ValueError(e)
