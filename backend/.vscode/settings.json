@@ -10,5 +10,5 @@
     "pydantic",
     "shortuuid"
   ],
-  "cSpell.ignorePaths": [".env", ".git", ".vscode"]
+  "cSpell.ignorePaths": [".env", ".git", ".vscode", "*.txt"]
 }
