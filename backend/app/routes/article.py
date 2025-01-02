@@ -29,6 +29,6 @@ async def update_article(article_id: str, article_update: Article) -> Article:
     return route.update_item(article_id, article_update)
 
 
-@router.delete("/{article_id}")
+@router.delete("/{article_id}", status_code=204)
 async def delete_article(article_id: str) -> None:
-    return route.delete_item(article_id)
+    route.delete_item(article_id)

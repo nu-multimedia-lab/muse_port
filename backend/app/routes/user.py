@@ -29,6 +29,6 @@ async def update_user(user_id: str, user_update: UserUpdate) -> User:
     return route.update_item(user_id, user_update)
 
 
-@router.delete("/{user_id}")
+@router.delete("/{user_id}", status_code=204)
 async def delete_user(user_id: str) -> None:
-    return route.delete_item(user_id)
+    route.delete_item(user_id)
