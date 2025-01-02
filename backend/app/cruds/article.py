@@ -44,7 +44,7 @@ class ArticleCRUD(CRUD):
 
     def update(self, id: str, article_update: Article) -> Article:
         try:
-            article: Article = self.get_article(id)
+            article: Article = self.get(id)
             article.updated_at = datetime.now(ZoneInfo(self.time_zone)).isoformat(
                 timespec="seconds"
             )  # isoformat() で日時を文字列に変換
