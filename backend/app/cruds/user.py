@@ -16,7 +16,7 @@ class UserCRUD(CRUD):
     def __init__(self) -> None:
         super().__init__(self.table_name)
 
-    def create_user(self, new_user: User) -> None:
+    def create(self, new_user: User) -> None:
         new_user.id = ShortUUID().random(length=self.id_length)
         new_user.created_at = datetime.now(ZoneInfo(self.time_zone)).isoformat(
             timespec="seconds"
@@ -28,7 +28,7 @@ class UserCRUD(CRUD):
         except Exception as e:
             raise ValueError(e)
 
-    def get_user(self, id: str) -> User:
+    def get(self, id: str) -> User:
         try:
             response: dict = self.table.get_item(Key={self.primary_key: id})
             item = response.get("Item")
@@ -38,11 +38,11 @@ class UserCRUD(CRUD):
         except Exception as e:
             raise ValueError(e)
 
-    def get_all_users(self) -> list[User]:
+    def get_all(self) -> list[User]:
         response: dict = self.table.scan()
         return [User.model_validate(item) for item in response["Items"]]
 
-    def update_user(self, id: str, user_update: UserUpdate) -> User:
+    def update(self, id: str, user_update: UserUpdate) -> User:
         try:
             user: User = self.get_user(id)
             user.updated_at = datetime.now(ZoneInfo(self.time_zone)).isoformat(
@@ -57,7 +57,7 @@ class UserCRUD(CRUD):
         except Exception as e:
             raise ValueError(e)
 
-    def delete_user(self, id: str) -> None:
+    def delete(self, id: str) -> None:
         try:
             self.table.delete_item(Key={self.primary_key: id})
             return None

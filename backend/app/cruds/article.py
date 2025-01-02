@@ -16,7 +16,7 @@ class ArticleCRUD(CRUD):
     def __init__(self) -> None:
         super().__init__(self.table_name)
 
-    def create_article(self, new_article: Article) -> None:
+    def create(self, new_article: Article) -> None:
         new_article.id = ShortUUID().random(length=self.id_length)
         new_article.created_at = datetime.now(ZoneInfo(self.time_zone)).isoformat(
             timespec="seconds"
@@ -28,7 +28,7 @@ class ArticleCRUD(CRUD):
         except Exception as e:
             raise ValueError(e)
 
-    def get_article(self, id: str) -> Article:
+    def get(self, id: str) -> Article:
         try:
             response: dict = self.table.get_item(Key={self.primary_key: id})
             item = response.get("Item")
@@ -38,11 +38,11 @@ class ArticleCRUD(CRUD):
         except Exception as e:
             raise ValueError(e)
 
-    def get_all_articles(self) -> list[Article]:
+    def get_all(self) -> list[Article]:
         response: dict = self.table.scan()
         return [Article.model_validate(item) for item in response["Items"]]
 
-    def update_article(self, id: str, article_update: Article) -> Article:
+    def update(self, id: str, article_update: Article) -> Article:
         try:
             article: Article = self.get_article(id)
             article.updated_at = datetime.now(ZoneInfo(self.time_zone)).isoformat(
@@ -57,7 +57,7 @@ class ArticleCRUD(CRUD):
         except Exception as e:
             raise ValueError(e)
 
-    def delete_article(self, id: str) -> None:
+    def delete(self, id: str) -> None:
         try:
             self.table.delete_item(Key={self.primary_key: id})
             return None
