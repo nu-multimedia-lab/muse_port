@@ -1,23 +1,82 @@
+from datetime import datetime
+from typing import Generic, Type
+from zoneinfo import ZoneInfo
+
 import boto3
-from pydantic import BaseModel
+from botocore.exceptions import ClientError
+from shortuuid import ShortUUID
+
+from app.cruds.errors import DatabaseError, ItemNotFoundError
+from app.schemas import Model
 
 
-class CRUD:
-    def __init__(self, table: str) -> None:
-        self.dynamodb = boto3.resource("dynamodb")
-        self.table = self.dynamodb.Table(table)
+class CRUD(Generic[Model]):
+    table_name: str
+    primary_key: str = "id"
+    time_zone: str = "Asia/Tokyo"
+    id_length: int
+    model_class: Type[Model]
 
-    def create(self, new_item: dict) -> None:
-        pass
+    def __init__(self) -> None:
+        try:
+            self.dynamodb = boto3.resource("dynamodb")
+            self.table = self.dynamodb.Table(self.table_name)
+        except Exception as e:
+            raise DatabaseError(f"データベース接続エラー: {str(e)}")
 
-    def get(self, id: str) -> BaseModel:
-        pass
+    def _generate_id(self) -> str:
+        return ShortUUID().random(length=self.id_length)
 
-    def get_all(self) -> list[BaseModel]:
-        pass
+    def _get_current_time(self) -> str:
+        return datetime.now(ZoneInfo(self.time_zone)).isoformat(timespec="seconds")
 
-    def update(self, id: str, update_item: BaseModel) -> BaseModel:
-        pass
+    def _handle_db_error(self, operation: str, error: Exception) -> None:
+        if isinstance(error, ClientError):
+            raise DatabaseError(f"DynamoDB {operation} エラー: {str(error)}")
+        raise error
+
+    def create(self, new_item: Model) -> Model:
+        try:
+            new_item.id = self._generate_id()
+            new_item.created_at = self._get_current_time()
+            self.table.put_item(Item=new_item.model_dump())
+            return new_item
+        except Exception as e:
+            self._handle_db_error("create", e)
+
+    def get(self, id: str) -> Model:
+        try:
+            response: dict = self.table.get_item(Key={self.primary_key: id})
+            item = response.get("Item")
+            if not item:
+                raise ItemNotFoundError(f"ID {id} のアイテムは存在しません")
+            return self.model_class.model_validate(item)
+        except ItemNotFoundError:
+            raise
+        except Exception as e:
+            self._handle_db_error("get", e)
+
+    def get_all(self) -> list[Model]:
+        try:
+            response: dict = self.table.scan()
+            return [self.model_class.model_validate(item) for item in response["Items"]]
+        except Exception as e:
+            self._handle_db_error("scan", e)
+
+    def update(self, id: str, update_item: Model) -> Model:
+        try:
+            item = self.get(id)
+            item.updated_at = self._get_current_time()
+            updated_item = item.model_copy(
+                update=update_item.model_dump(exclude_unset=True)
+            )
+            self.table.put_item(Item=updated_item.model_dump())
+            return updated_item
+        except Exception as e:
+            self._handle_db_error("update", e)
 
     def delete(self, id: str) -> None:
-        pass
+        try:
+            self.table.delete_item(Key={self.primary_key: id})
+        except Exception as e:
+            self._handle_db_error("delete", e)
