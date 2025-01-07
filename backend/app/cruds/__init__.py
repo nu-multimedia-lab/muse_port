@@ -28,8 +28,8 @@ class CRUD(Generic[Model]):
     def _generate_id(self) -> str:
         return ShortUUID().random(length=self.id_length)
 
-    def _get_current_time(self) -> str:
-        return datetime.now(ZoneInfo(self.time_zone)).isoformat(timespec="seconds")
+    def _get_current_time(self) -> datetime:
+        return datetime.now(ZoneInfo(self.time_zone))
 
     def _handle_db_error(self, operation: str, error: Exception) -> None:
         if isinstance(error, ClientError):
@@ -38,13 +38,14 @@ class CRUD(Generic[Model]):
 
     def create(self, new_item: BaseModel) -> Model:
         try:
+            now: datetime = self._get_current_time()
             put_item: Model = self.model_class(
                 id=self._generate_id(),
-                created_at=self._get_current_time(),
-                updated_at=self._get_current_time(),
-                **new_item.model_dump(),
+                created_at=now,
+                updated_at=now,
+                **new_item.model_dump(exclude_unset=True),
             )
-            self.table.put_item(Item=put_item.model_dump())
+            self.table.put_item(Item=put_item.model_dump(mode="json"))
             return put_item
         except Exception as e:
             self._handle_db_error("create", e)
@@ -75,7 +76,7 @@ class CRUD(Generic[Model]):
             updated_item: Model = item.model_copy(
                 update=update_item.model_dump(exclude_unset=True)
             )
-            self.table.put_item(Item=updated_item.model_dump())
+            self.table.put_item(Item=updated_item.model_dump(mode="json"))
             return updated_item
         except Exception as e:
             self._handle_db_error("update", e)
