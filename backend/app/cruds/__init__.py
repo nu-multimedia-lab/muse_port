@@ -4,6 +4,7 @@ from zoneinfo import ZoneInfo
 
 import boto3
 from botocore.exceptions import ClientError
+from pydantic import BaseModel
 from shortuuid import ShortUUID
 
 from app.cruds.errors import DatabaseError, ItemNotFoundError
@@ -35,12 +36,16 @@ class CRUD(Generic[Model]):
             raise DatabaseError(f"DynamoDB {operation} エラー: {str(error)}")
         raise error
 
-    def create(self, new_item: Model) -> Model:
+    def create(self, new_item: BaseModel) -> Model:
         try:
-            new_item.id = self._generate_id()
-            new_item.created_at = self._get_current_time()
-            self.table.put_item(Item=new_item.model_dump())
-            return new_item
+            put_item: Model = self.model_class(
+                id=self._generate_id(),
+                created_at=self._get_current_time(),
+                updated_at=self._get_current_time(),
+                **new_item.model_dump(),
+            )
+            self.table.put_item(Item=put_item.model_dump())
+            return put_item
         except Exception as e:
             self._handle_db_error("create", e)
 
@@ -63,11 +68,11 @@ class CRUD(Generic[Model]):
         except Exception as e:
             self._handle_db_error("scan", e)
 
-    def update(self, id: str, update_item: Model) -> Model:
+    def update(self, id: str, update_item: BaseModel) -> Model:
         try:
-            item = self.get(id)
+            item: Model = self.get(id)
             item.updated_at = self._get_current_time()
-            updated_item = item.model_copy(
+            updated_item: Model = item.model_copy(
                 update=update_item.model_dump(exclude_unset=True)
             )
             self.table.put_item(Item=updated_item.model_dump())

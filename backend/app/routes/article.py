@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from app.cruds.article import ArticleCRUD
 from app.routes import Route
-from app.schemas.article import Article, ArticleUpdate
+from app.schemas.article import Article, ArticleCreate, ArticleUpdate
 
 router = APIRouter()
 crud = ArticleCRUD()
@@ -15,7 +15,7 @@ async def get_articles() -> list[Article]:
 
 
 @router.post("/", status_code=201)
-async def create_article(new_article: Article) -> Article:
+async def create_article(new_article: ArticleCreate) -> Article:
     return route.create_item(new_article)
 
 

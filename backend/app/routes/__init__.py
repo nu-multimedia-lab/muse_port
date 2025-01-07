@@ -1,4 +1,5 @@
 from fastapi import HTTPException
+from pydantic import BaseModel
 
 from app.cruds import CRUD
 from app.schemas import Model
@@ -15,10 +16,10 @@ class Route:
         except ValueError as e:
             raise HTTPException(status_code=400, detail=str(e))
 
-    def create_item(self, new_item: Model) -> Model:
+    def create_item(self, new_item: BaseModel) -> Model:
         try:
-            self.crud.create(new_item)
-            return new_item
+            created_item: Model = self.crud.create(new_item)
+            return created_item
         except ValueError as e:
             raise HTTPException(status_code=400, detail=str(e))
 
@@ -29,7 +30,7 @@ class Route:
         except ValueError as e:
             raise HTTPException(status_code=400, detail=str(e))
 
-    def update_item(self, item_id: str, item_update: Model) -> Model:
+    def update_item(self, item_id: str, item_update: BaseModel) -> Model:
         try:
             updated_item = self.crud.update(item_id, item_update)
             return updated_item

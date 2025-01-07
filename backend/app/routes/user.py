@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from app.cruds.user import UserCRUD
 from app.routes import Route
-from app.schemas.user import User, UserUpdate
+from app.schemas.user import User, UserCreate, UserUpdate
 
 router = APIRouter()
 crud = UserCRUD()
@@ -15,7 +15,7 @@ async def get_users() -> list[User]:
 
 
 @router.post("/", status_code=201)
-async def create_user(new_user: User) -> User:
+async def create_user(new_user: UserCreate) -> User:
     return route.create_item(new_user)
 
 
