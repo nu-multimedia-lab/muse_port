@@ -1,3 +1,4 @@
+import { ConsoleDebug } from "@/app/debug/console";
 import React from "react";
 
 export const dynamic = "force-dynamic";
@@ -16,7 +17,8 @@ const DebugPage = () => {
       </div>
       <div className="flex flex-col items-center gap-4 p-16">
         <h3 className="text-2xl font-bold">フェッチ検証用</h3>
-        <p>現在は検証項目がありません</p>
+        <p>現在は検証UIがありません</p>
+        <ConsoleDebug />
       </div>
     </main>
   );
