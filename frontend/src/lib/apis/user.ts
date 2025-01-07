@@ -1,4 +1,4 @@
-import { User } from "@/lib/types";
+import { User, UserCreate, UserUpdate } from "@/lib/types";
 import axios, { AxiosInstance } from "axios";
 
 const apiClient: AxiosInstance = axios.create({
@@ -15,12 +15,12 @@ const getUser = async (id: string): Promise<User> => {
   return res;
 };
 
-const createUser = async (data: User): Promise<User> => {
+const createUser = async (data: UserCreate): Promise<User> => {
   const res: User = await apiClient.post("/", data).then((res) => res.data);
   return res;
 };
 
-const updateUser = async (id: string, data: User): Promise<User> => {
+const updateUser = async (id: string, data: UserUpdate): Promise<User> => {
   const res: User = await apiClient.put(`/${id}`, data).then((res) => res.data);
   return res;
 };
