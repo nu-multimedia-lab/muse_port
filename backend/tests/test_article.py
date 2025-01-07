@@ -5,9 +5,28 @@ from app.main import app
 client = TestClient(app)
 
 
-def test_read_articles():
+def test_get_articles():
     response = client.get("/articles")
     assert response.status_code == 200
+
+
+def test_get_article():
+    # First, create an article to get
+    response = client.post(
+        "/articles",
+        json={
+            "user_id": "Pytest",
+            "title": "article_to_get",
+            "content": "This is an article to get.",
+        },
+    )
+    assert response.status_code == 201
+    article_id = response.json()["id"]
+
+    # Get the article
+    response = client.get(f"/articles/{article_id}")
+    assert response.status_code == 200
+    assert response.json()["title"] == "article_to_get"
 
 
 def test_create_article():
@@ -15,6 +34,7 @@ def test_create_article():
         "/articles",
         json={
             "user_id": "Pytest",
+            "tags": ["test", "pytest", "fastapi"],
             "title": "test_article",
             "content": "This is a test article.",
         },
