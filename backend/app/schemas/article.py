@@ -4,16 +4,23 @@ from pydantic import BaseModel
 
 
 class Article(BaseModel):
-    id: Optional[str] = None  # PK
+    id: str  # PK
     user_id: str  # FK
-    created_at: Optional[str] = None
-    updated_at: Optional[str] = None
-    tags: Optional[list[str]] = None
+    created_at: str
+    updated_at: str
     title: str
+    tags: Optional[list[str]] = None
+    content: str
+
+
+class ArticleCreate(BaseModel):
+    user_id: str
+    title: str
+    tags: Optional[list[str]] = None
     content: str
 
 
 class ArticleUpdate(BaseModel):
-    tags: Optional[list[str]] = None
     title: Optional[str] = None
+    tags: Optional[list[str]] = None
     content: Optional[str] = None

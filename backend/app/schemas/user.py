@@ -4,11 +4,16 @@ from pydantic import BaseModel
 
 
 class User(BaseModel):
-    id: Optional[str] = None  # PK
+    id: str  # PK
+    created_at: str
+    updated_at: str
     username: str
     bio: Optional[str] = None
-    created_at: Optional[str] = None
-    updated_at: Optional[str] = None
+
+
+class UserCreate(BaseModel):
+    username: str
+    bio: Optional[str] = None
 
 
 class UserUpdate(BaseModel):
