@@ -1,4 +1,4 @@
-import { ModeToggle } from "@/components/ModeToggle";
+import { ModeToggle } from "@/components/elements/ModeToggle";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -16,10 +16,10 @@ export const Header = () => {
               <Link href="/">Home</Link>
             </Button>
             <Button variant="link" asChild>
-              <Link href="/debug">Debug</Link>
+              <Link href="/members">Members</Link>
             </Button>
             <Button variant="link" asChild>
-              <Link href="/login">Login</Link>
+              <Link href="/debug">Debug</Link>
             </Button>
           </ul>
         </nav>

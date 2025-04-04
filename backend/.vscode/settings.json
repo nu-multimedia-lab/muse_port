@@ -8,7 +8,8 @@
     "fastapi",
     "mangum",
     "pydantic",
-    "shortuuid"
+    "shortuuid",
+    "timespec"
   ],
-  "cSpell.ignorePaths": [".env", ".git", ".vscode"]
+  "cSpell.ignorePaths": [".env", ".git", ".vscode", "*.txt", ".venv"]
 }
