@@ -1,4 +1,4 @@
-import { ConsoleDebug } from "@/app/debug/console";
+import { ConsoleDebug } from "@/app/debug/Console";
 import React from "react";
 
 export const dynamic = "force-dynamic";
