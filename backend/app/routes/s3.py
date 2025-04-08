@@ -1,31 +1,36 @@
 from fastapi import APIRouter, HTTPException
 import boto3
 from botocore.exceptions import ClientError
+from app.schemas.s3 import PresignedRequest
 
 router = APIRouter()
 
-s3_client = boto3.client('s3')
+# S3クライアント設定
+s3_client = boto3.client('s3', region_name='ap-northeast-3', endpoint_url='https://s3.ap-northeast-3.amazonaws.com')
+# エンドポイントを明示的に指定しないと、勝手にリダイレクトして認証エラーが発生するので注意
 
-@router.post("/generate-presigned-url/download/")
-def generate_presigned_url_download(bucket_name: str, object_name: str, expiration: int = 3600):
+# ダウンロード用のpresigned URLを生成
+@router.post("/generate-download-url")
+def generate_download_url(presigned_request: PresignedRequest) -> dict:
     try:
-        response = s3_client.generate_presigned_url(
-            'get_object',
-            Params={'Bucket': bucket_name, 'Key': object_name},
-            ExpiresIn=expiration
+        presigned_url = s3_client.generate_presigned_url(
+            ClientMethod='get_object',
+            Params={'Bucket': presigned_request.bucket_name, 'Key': presigned_request.object_name},
+            ExpiresIn=presigned_request.expiration
         )
-        return {"url": response}
+        return {"url": presigned_url}
     except ClientError as e:
-        raise HTTPException(status_code=500, detail=f"Presigned URLの生成に失敗しました: {str(e)}")
-    
-@router.post("/generate-presigned-url/upload/")
-def generate_presigned_url_upload(bucket_name: str, object_name: str, expiration: int = 3600):
+        raise HTTPException(status_code=500, detail=str(e))
+
+# アップロード用のpresigned URLを生成
+@router.post("/generate-upload-url")
+def generate_upload_url(presigned_request: PresignedRequest) -> dict:
     try:
-        response = s3_client.generate_presigned_url(
-            'put_object',
-            Params={'Bucket': bucket_name, 'Key': object_name},
-            ExpiresIn=expiration
+        presigned_url = s3_client.generate_presigned_url(
+            ClientMethod='put_object',
+            Params={'Bucket': presigned_request.bucket_name, 'Key': presigned_request.object_name},
+            ExpiresIn=presigned_request.expiration
         )
-        return {"url": response}
+        return {"url": presigned_url}
     except ClientError as e:
-        raise HTTPException(status_code=500, detail=f"Presigned URLの生成に失敗しました: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
