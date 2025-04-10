@@ -1,6 +1,8 @@
 from pydantic import BaseModel
+from typing import Optional
 
-class PresignedRequest(BaseModel):
+class S3ObjectRequest(BaseModel):
     bucket_name: str
+    article_id: str
     object_name: str
-    expiration: int = 300
+    expiration: Optional[int] = 300

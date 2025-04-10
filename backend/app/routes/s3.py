@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 import boto3
 from botocore.exceptions import ClientError
-from app.schemas.s3 import PresignedRequest
+from app.schemas.s3 import S3ObjectRequest
 
 router = APIRouter()
 
@@ -11,25 +11,29 @@ s3_client = boto3.client('s3', region_name='ap-northeast-3', endpoint_url='https
 
 # ダウンロード用のpresigned URLを生成
 @router.post("/generate-download-url")
-def generate_download_url(presigned_request: PresignedRequest) -> dict:
+def generate_download_url(request: S3ObjectRequest) -> dict:
+    object_key = f"{request.article_id}/{request.object_name}"
+    # S3オブジェクトのキーをarticle_idとobject_nameを組み合わせて生成
     try:
         presigned_url = s3_client.generate_presigned_url(
             ClientMethod='get_object',
-            Params={'Bucket': presigned_request.bucket_name, 'Key': presigned_request.object_name},
-            ExpiresIn=presigned_request.expiration
+            Params={'Bucket': request.bucket_name, 'Key': object_key},
+            ExpiresIn=request.expiration
         )
-        return {"url": presigned_url}
+        return {"url": presigned_url, "filename": object_key}
     except ClientError as e:
         raise HTTPException(status_code=500, detail=f"ダウンロード用URLの生成に失敗しました: {str(e)}")
 
 # アップロード用のpresigned URLを生成
 @router.post("/generate-upload-url")
-def generate_upload_url(presigned_request: PresignedRequest) -> dict:
+def generate_upload_url(request: S3ObjectRequest) -> dict:
+    object_key = f"{request.article_id}/{request.object_name}"
+    # S3オブジェクトのキーをarticle_idとobject_nameを組み合わせて生成
     try:
         presigned_url = s3_client.generate_presigned_url(
             ClientMethod='put_object',
-            Params={'Bucket': presigned_request.bucket_name, 'Key': presigned_request.object_name},
-            ExpiresIn=presigned_request.expiration
+            Params={'Bucket': request.bucket_name, 'Key': object_key},
+            ExpiresIn=request.expiration
         )
         return {"url": presigned_url}
     except ClientError as e:
@@ -49,9 +53,10 @@ def list_objects(bucket_name: str) -> dict:
 
 # S3バケットのオブジェクトを削除
 @router.delete("/delete-object")
-def delete_object(bucket_name: str, object_name: str) -> dict:
+def delete_object(request: S3ObjectRequest) -> dict:
+    object_key = f"{request.article_id}/{request.object_name}"
     try:
-        s3_client.delete_object(Bucket=bucket_name, Key=object_name)
+        s3_client.delete_object(Bucket=request.bucket_name, Key=object_key)
         return {"message": "オブジェクトが削除されました"}
     except ClientError as e:
         raise HTTPException(status_code=500, detail=f"オブジェクトの削除に失敗しました: {str(e)}")
