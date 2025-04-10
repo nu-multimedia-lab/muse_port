@@ -20,7 +20,7 @@ def generate_download_url(presigned_request: PresignedRequest) -> dict:
         )
         return {"url": presigned_url}
     except ClientError as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"ダウンロード用URLの生成に失敗しました: {str(e)}")
 
 # アップロード用のpresigned URLを生成
 @router.post("/generate-upload-url")
@@ -33,4 +33,25 @@ def generate_upload_url(presigned_request: PresignedRequest) -> dict:
         )
         return {"url": presigned_url}
     except ClientError as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"アップロード用URLの生成に失敗しました: {str(e)}")
+
+# S3バケットのオブジェクト一覧を取得
+@router.get("/list-objects")
+def list_objects(bucket_name: str) -> dict:
+    try:
+        response = s3_client.list_objects_v2(Bucket=bucket_name)
+        if 'Contents' in response:
+            return {"objects": [obj['Key'] for obj in response['Contents']]}
+        else:
+            return {"objects": []}
+    except ClientError as e:
+        raise HTTPException(status_code=500, detail=f"オブジェクト一覧の取得に失敗しました: {str(e)}")
+
+# S3バケットのオブジェクトを削除
+@router.delete("/delete-object")
+def delete_object(bucket_name: str, object_name: str) -> dict:
+    try:
+        s3_client.delete_object(Bucket=bucket_name, Key=object_name)
+        return {"message": "オブジェクトが削除されました"}
+    except ClientError as e:
+        raise HTTPException(status_code=500, detail=f"オブジェクトの削除に失敗しました: {str(e)}")
