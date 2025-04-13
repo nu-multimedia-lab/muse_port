@@ -17,7 +17,7 @@ type UserDetailProps = {
   tags?: string[] | null;
 };
 
-export const UserDetail = (props: UserDetailProps) => {
+export const UserDetailElement = (props: UserDetailProps) => {
   // Format the joined date if available
   const formattedDate = props.joinedAt
     ? new Date(props.joinedAt).toLocaleDateString("ja-JP", {
@@ -32,7 +32,7 @@ export const UserDetail = (props: UserDetailProps) => {
       <CardHeader>
         <div className="flex flex-col md:flex-row md:items-center gap-6">
           <Avatar className="h-24 w-24 border-2">
-            {/* <AvatarImage src={props.imgSrc} /> */}
+            <AvatarImage src={props.imgSrc} />
             <AvatarFallback className="text-3xl uppercase">
               {props.username[0] + (props.username[1] || "")}
             </AvatarFallback>

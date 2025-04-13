@@ -18,7 +18,7 @@ type ArticleDetailProps = {
   authorName: string;
 };
 
-export const ArticleDetail = (props: ArticleDetailProps) => {
+export const ArticleDetailElement = (props: ArticleDetailProps) => {
   // Format the date for display
   const formattedDate = new Date(props.createdAt).toLocaleDateString("ja-JP", {
     year: "numeric",

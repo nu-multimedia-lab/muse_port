@@ -1,4 +1,4 @@
-import { UserDetail as UserDetailElement } from "@/components/elements/UserDetail";
+import { UserDetailElement } from "@/components/elements/UserDetailElement";
 import { getUser } from "@/lib/apis/user";
 import { User } from "@/lib/types";
 import { notFound } from "next/navigation";

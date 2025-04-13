@@ -1,4 +1,4 @@
-import { ArticleDetail as ArticleDetailElement } from "@/components/elements/ArticleDetail";
+import { ArticleDetailElement } from "@/components/elements/ArticleDetailElement";
 import { getArticle } from "@/lib/apis/article";
 import { getUser } from "@/lib/apis/user";
 import { Article, User } from "@/lib/types";
