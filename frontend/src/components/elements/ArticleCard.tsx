@@ -1,11 +1,8 @@
+"use client";
+
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Image } from "@phosphor-icons/react";
 
 type ArticleCardProps = {
   id: string;
@@ -24,35 +21,52 @@ export const ArticleCard = (props: ArticleCardProps) => {
     day: "numeric",
   });
 
-  // Create a summary from the content (first 100 characters)
-  const summary =
-    props.content.length > 100
-      ? `${props.content.substring(0, 100)}...`
-      : props.content;
-
   return (
-    <Card className="w-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
-      <CardHeader>
-        <div className="flex flex-col gap-2">
-          <CardTitle className="text-xl font-bold">{props.title}</CardTitle>
-          <div className="text-sm text-neutral-500 dark:text-neutral-400">
-            投稿者: @{props.userId} • {formattedDate}
+    <div className="flex flex-col h-full overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-sm hover:shadow-md transition-all duration-300">
+      {/* サムネイル画像エリア - アスペクト比を保持 */}
+      <div className="w-full aspect-[16/9] bg-secondary relative">
+        <div className="absolute inset-0 flex items-center justify-center text-neutral-400 dark:text-neutral-500">
+          <Image size={48} />
+        </div>
+      </div>
+
+      {/* コンテンツエリア - 残りの高さを占める */}
+      <div className="flex flex-col flex-grow p-5">
+        {/* タイトルのみ表示 - 常に2行まで表示 */}
+        <h3 className="text-xl font-bold mb-3 line-clamp-2 min-h-[3.5rem]">
+          {props.title}
+        </h3>
+
+        {/* タグエリア - タグが存在しない場合は「タグ未設定」と表示 */}
+        <div className="mb-4">
+          <div className="flex flex-wrap gap-2">
+            {props.tags && props.tags.length > 0 ? (
+              props.tags.map((tag) => (
+                <Badge key={tag} variant="secondary" className="text-xs">
+                  {tag}
+                </Badge>
+              ))
+            ) : (
+              <Badge variant="outline" className="text-xs text-neutral-500">
+                タグ未設定
+              </Badge>
+            )}
           </div>
         </div>
-      </CardHeader>
-      <CardContent>
-        <p className="text-neutral-700 dark:text-neutral-300">{summary}</p>
-      </CardContent>
-      <CardFooter>
-        <div className="flex flex-wrap gap-2">
-          {props.tags &&
-            props.tags.map((tag) => (
-              <Badge key={tag} variant="secondary">
-                {tag}
-              </Badge>
-            ))}
+
+        {/* 投稿者情報と日付 - 常に下部に表示 */}
+        <div className="flex items-center gap-3 mt-auto pt-3 border-t border-neutral-100 dark:border-neutral-800">
+          <Avatar className="h-8 w-8">
+            <AvatarFallback className="text-xs bg-neutral-200 dark:bg-neutral-700">
+              {props.userId.substring(0, 2).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <div>
+            <div className="text-sm font-medium">{props.userId}</div>
+            <div className="text-xs text-neutral-500">{formattedDate}</div>
+          </div>
         </div>
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   );
 };
