@@ -1,22 +1,22 @@
-import { UserCard } from "@/components/elements/UserCard";
+import { UserDetail as UserDetailElement } from "@/components/elements/UserDetail";
 import { getUser } from "@/lib/apis/user";
 import { User } from "@/lib/types";
 import { notFound } from "next/navigation";
 
-type UserProps = {
+type UserDetailProps = {
   userId: string;
 };
 
-export const MemberDetail = async (props: UserProps) => {
+export const UserDetail = async (props: UserDetailProps) => {
   try {
     const user: User = await getUser(props.userId);
 
-    return await (
-      <UserCard
-        imgSrc={undefined}
-        userId={user.id}
-        userName={user.username}
+    return (
+      <UserDetailElement
+        id={user.id}
+        username={user.username}
         bio={user.bio}
+        imgSrc={undefined}
       />
     );
   } catch (error) {

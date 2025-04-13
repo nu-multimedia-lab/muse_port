@@ -1,5 +1,5 @@
 import Loading from "@/app/works/[workId]/loading";
-import { WorkDetail } from "@/components/features/articles/ArticleDetail";
+import { ArticleDetail } from "@/components/features/articles/ArticleDetail";
 import React, { Suspense } from "react";
 
 const WorkPage = ({ params }: { params: { workId: string } }) => {
@@ -11,7 +11,7 @@ const WorkPage = ({ params }: { params: { workId: string } }) => {
         <h1 className="text-4xl font-extrabold mx-auto">Work Detail</h1>
         <div className="mx-auto max-w-[720px]">
           <Suspense fallback={<Loading />}>
-            <WorkDetail workId={workId} />
+            <ArticleDetail articleId={workId} />
           </Suspense>
         </div>
       </div>

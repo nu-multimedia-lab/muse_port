@@ -1,4 +1,4 @@
-import { MemberList } from "@/components/features/users/UserList";
+import { UserList } from "@/components/features/users/UserList";
 import Loading from "@/app/members/loading";
 import React, { Suspense } from "react";
 
@@ -12,7 +12,7 @@ const MembersPage = () => {
           <h1 className="text-4xl font-extrabold mx-auto">Members</h1>
           <div className="mx-auto">
             <Suspense fallback={<Loading />}>
-              <MemberList />
+              <UserList />
             </Suspense>
           </div>
         </div>

@@ -1,16 +1,16 @@
-import { ArticleDetail } from "@/components/elements/ArticleDetail";
+import { ArticleDetail as ArticleDetailElement } from "@/components/elements/ArticleDetail";
 import { getArticle } from "@/lib/apis/article";
 import { getUser } from "@/lib/apis/user";
 import { Article, User } from "@/lib/types";
 import { notFound } from "next/navigation";
 
-type WorkProps = {
-  workId: string;
+type ArticleDetailProps = {
+  articleId: string;
 };
 
-export const WorkDetail = async (props: WorkProps) => {
+export const ArticleDetail = async (props: ArticleDetailProps) => {
   try {
-    const article: Article = await getArticle(props.workId);
+    const article: Article = await getArticle(props.articleId);
     let author: User | null = null;
 
     try {
@@ -21,7 +21,7 @@ export const WorkDetail = async (props: WorkProps) => {
     }
 
     return (
-      <ArticleDetail
+      <ArticleDetailElement
         id={article.id}
         title={article.title}
         content={article.content}

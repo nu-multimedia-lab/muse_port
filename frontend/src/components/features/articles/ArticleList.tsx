@@ -3,7 +3,7 @@ import { getAllArticles } from "@/lib/apis/article";
 import { Article } from "@/lib/types";
 import Link from "next/link";
 
-export const WorkList = async () => {
+export const ArticleList = async () => {
   try {
     const articles: Article[] = await getAllArticles();
 

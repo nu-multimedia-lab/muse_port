@@ -1,5 +1,5 @@
 import Loading from "@/app/members/[userId]/loading";
-import { MemberDetail } from "@/components/features/users/UserDetail";
+import { UserDetail } from "@/components/features/users/UserDetail";
 import React, { Suspense } from "react";
 
 const MemberPage = ({ params }: { params: { userId: string } }) => {
@@ -11,7 +11,7 @@ const MemberPage = ({ params }: { params: { userId: string } }) => {
         <h1 className="text-4xl font-extrabold mx-auto">Member Detail</h1>
         <div className="mx-auto min-w-[720px]">
           <Suspense fallback={<Loading />}>
-            <MemberDetail userId={userId} />
+            <UserDetail userId={userId} />
           </Suspense>
         </div>
       </div>
