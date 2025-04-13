@@ -1,4 +1,4 @@
-import { MemberList } from "@/app/members/MemberList";
+import { MemberList } from "@/components/features/users/UserList";
 import Loading from "@/app/members/loading";
 import React, { Suspense } from "react";
 

@@ -1,4 +1,4 @@
-import { WorkList } from "@/app/works/WorkList";
+import { WorkList } from "@/components/features/articles/ArticleList";
 import Loading from "@/app/works/loading";
 import React, { Suspense } from "react";
 

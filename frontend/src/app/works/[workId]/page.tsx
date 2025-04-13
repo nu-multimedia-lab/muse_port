@@ -1,5 +1,5 @@
 import Loading from "@/app/works/[workId]/loading";
-import { WorkDetail } from "@/app/works/[workId]/WorkDetail";
+import { WorkDetail } from "@/components/features/articles/ArticleDetail";
 import React, { Suspense } from "react";
 
 const WorkPage = ({ params }: { params: { workId: string } }) => {
