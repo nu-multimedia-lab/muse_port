@@ -113,12 +113,11 @@ const Home = () => {
             MUSE PORT
           </h1>
           <p className="text-xl md:text-2xl font-semibold mb-8">
-            長崎大学マルチメディア研究会の創作ポータル
+            長崎大学マルチメディア研究会 創作ポータル
           </p>
           <p className="text-lg md:text-xl mb-10 max-w-2xl mx-auto">
             MUSE
             PORTはゲーム、イラスト、モデリング、DTMなど、部員たちが創り出した作品を
-            <br className="hidden md:block" />
             自由に閲覧できるオンラインギャラリーです。
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -464,16 +463,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* ベータ版バナー (フローティング) */}
-      <div className="fixed bottom-6 right-6 z-50 bg-blue-600 text-white py-3 px-6 rounded-full shadow-lg flex items-center">
-        <span className="bg-white text-blue-600 text-xs font-bold py-1 px-2 rounded-full mr-2">
-          β
-        </span>
-        <span className="font-medium">
-          ベータ版のため一部機能が制限されています
-        </span>
-      </div>
     </main>
   );
 };

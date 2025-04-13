@@ -4,6 +4,7 @@ import { Noto_Sans_JP } from "next/font/google";
 import { Header } from "@/components/layouts/Header";
 import { Footer } from "@/components/layouts/Footer";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import BetaBanner from "@/components/elements/BetaBanner";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
@@ -31,6 +32,7 @@ const RootLayout = ({
           <Header />
           {children}
           <Footer />
+          <BetaBanner />
         </ThemeProvider>
       </body>
     </html>
