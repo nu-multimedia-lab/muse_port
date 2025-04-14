@@ -1,5 +1,8 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Calendar } from "@phosphor-icons/react";
 
 type UserDetailProps = {
   id: string;
@@ -7,7 +10,6 @@ type UserDetailProps = {
   bio: string | null;
   imgSrc: string | undefined;
   joinedAt?: Date;
-  tags?: string[] | null;
 };
 
 export const UserDetailElement = (props: UserDetailProps) => {
@@ -21,46 +23,46 @@ export const UserDetailElement = (props: UserDetailProps) => {
     : null;
 
   return (
-    <div className="grid grid-cols-1 gap-6 p-8 rounded-3xl shadow-md border-2 bg-white dark:bg-neutral-900 w-full max-w-3xl mx-auto">
-      <div className="flex flex-col md:flex-row gap-6">
-        <Avatar className="h-24 w-24 border-2">
+    <div className="w-full max-w-3xl mx-auto">
+      {/* ヘッダー情報 */}
+      <div className="flex flex-col items-center text-center mb-8 pt-6">
+        <Avatar className="h-24 w-24 mb-4">
           <AvatarImage src={props.imgSrc} />
           <AvatarFallback className="text-3xl uppercase">
             {props.username[0] + (props.username[1] || "")}
           </AvatarFallback>
         </Avatar>
+        <h1 className="text-2xl font-bold mb-1">{props.username}</h1>
+        <Badge variant="secondary">@{props.id}</Badge>　
+        {formattedDate && (
+          <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400 mt-1">
+            <Calendar size={16} className="mr-1" />
+            <span>{formattedDate}から参加</span>
+          </div>
+        )}
+      </div>
 
-        <div className="flex flex-col gap-2">
-          <p className="text-sm font-bold text-neutral-600 dark:text-neutral-400">
-            @{props.id}
-          </p>
-          <h1 className="text-2xl font-black">{props.username}</h1>
+      {/* メイン情報 */}
+      <div className="border rounded-lg overflow-hidden">
+        {/* タブナビゲーション (現在は単一タブのみ) */}
+        <div className="flex border-b">
+          <div className="py-2 px-4 font-medium">プロフィール</div>
+        </div>
 
-          {formattedDate && (
-            <span className="text-sm text-neutral-500 dark:text-neutral-400">
-              登録日: {formattedDate}
-            </span>
-          )}
-
-          {props.tags && props.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-2">
-              {props.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-          )}
+        {/* プロフィール内容 */}
+        <div className="p-6">
+          {/* 自己紹介 */}
+          <div className="mb-8">
+            <h2 className="text-lg font-medium mb-3">自己紹介</h2>
+            <p className="whitespace-pre-line text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              {props.bio == null ? "記述なし" : props.bio}
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="p-4 rounded-md bg-neutral-100 dark:bg-neutral-800">
-        <p className="whitespace-pre-line">
-          {props.bio == null ? "記述なし" : props.bio}
-        </p>
-      </div>
-
-      <div className="text-sm text-neutral-500 dark:text-neutral-400 text-right">
+      {/* フッター情報 */}
+      <div className="mt-6 text-sm text-neutral-500 dark:text-neutral-400 text-right">
         ID: {props.id}
       </div>
     </div>

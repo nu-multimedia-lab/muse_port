@@ -1,13 +1,10 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
+import { Calendar, User } from "@phosphor-icons/react";
+import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 
 type ArticleDetailProps = {
   id: string;
@@ -26,47 +23,55 @@ export const ArticleDetailElement = (props: ArticleDetailProps) => {
     year: "numeric",
     month: "long",
     day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
   });
 
   // Process content for display (split by paragraphs)
   const paragraphs = props.content.split("\n").filter((p) => p.trim() !== "");
 
   return (
-    <div className="grid grid-cols-1 gap-6 p-8 rounded-3xl shadow-md border-2 bg-white dark:bg-neutral-900 w-full max-w-3xl mx-auto">
-      {/* タイトルと著者情報 */}
-      <div className="flex flex-col gap-4">
-        <h1 className="text-3xl font-black">{props.title}</h1>
+    <div className="w-full max-w-3xl mx-auto">
+      {/* 記事ヘッダー */}
+      <div className="mb-10">
+        <h1 className="text-3xl font-bold mb-6 leading-tight">{props.title}</h1>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center mb-4">
           <Link
             href={`/members/${props.authorId}`}
-            className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+            className="flex items-center gap-3 group"
           >
-            <Avatar className="h-12 w-12 border-2">
+            <Avatar className="h-12 w-12">
               <AvatarImage src={props.authorImgSrc} />
-              <AvatarFallback className="text-lg uppercase">
-                {props.authorName[0] + (props.authorName[1] || "")}
+              <AvatarFallback className="text-sm uppercase">
+                <User size={24} />
               </AvatarFallback>
             </Avatar>
             <div>
-              <p className="font-medium">{props.authorName}</p>
+              <p className="font-medium group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                {props.authorName}
+              </p>
               <p className="text-sm text-neutral-500 dark:text-neutral-400">
                 @{props.authorId}
               </p>
             </div>
           </Link>
+        </div>
 
-          <div className="ml-auto text-sm text-neutral-500 dark:text-neutral-400">
-            {formattedDate}
+        <div className="flex flex-wrap items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400 mb-6">
+          <div className="flex items-center">
+            <Calendar size={16} className="mr-1" />
+            <span>{formattedDate}</span>
           </div>
         </div>
 
+        {/* タグ */}
         {props.tags && props.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-1">
+          <div className="flex flex-wrap gap-2 mb-6">
             {props.tags.map((tag) => (
-              <Badge key={tag} variant="secondary">
+              <Badge
+                key={tag}
+                variant="outline"
+                className="bg-neutral-50 dark:bg-neutral-800 px-3 py-1"
+              >
                 {tag}
               </Badge>
             ))}
@@ -75,25 +80,25 @@ export const ArticleDetailElement = (props: ArticleDetailProps) => {
       </div>
 
       {/* 記事本文 */}
-      <div className="p-6 rounded-lg bg-neutral-100 dark:bg-neutral-800">
-        <div className="prose dark:prose-invert max-w-none">
-          {paragraphs.map((paragraph, idx) => (
-            <p key={idx} className="my-4 whitespace-pre-line">
-              {paragraph}
-            </p>
-          ))}
-        </div>
-      </div>
+      <article className="prose dark:prose-invert max-w-none mb-16">
+        {paragraphs.map((paragraph, idx) => (
+          <p key={idx} className="mb-6 leading-relaxed whitespace-pre-line">
+            {paragraph}
+          </p>
+        ))}
+      </article>
 
-      {/* フッター */}
-      <div className="flex justify-between items-center text-sm text-neutral-500 dark:text-neutral-400 border-t pt-4 border-neutral-200 dark:border-neutral-700">
+      {/* フッターナビゲーション */}
+      <div className="flex justify-between items-center py-4 border-t border-neutral-200 dark:border-neutral-700">
         <Link
           href="/works"
-          className="text-blue-600 dark:text-blue-400 hover:underline"
+          className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
         >
-          ← 作品一覧に戻る
+          <ArrowLeft weight="bold" className="inline" /> 記事一覧に戻る
         </Link>
-        <span>ID: {props.id}</span>
+        <span className="text-sm text-neutral-500 dark:text-neutral-400">
+          ID: {props.id}
+        </span>
       </div>
     </div>
   );

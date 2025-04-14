@@ -16,7 +16,7 @@ export const UserCard = (props: UserCardProps) => {
     <div className="h-full overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-sm hover:shadow-md transition-all duration-300">
       <div className="p-6 flex flex-col h-full">
         <div className="flex items-center gap-4 mb-4">
-          <Avatar className="h-16 w-16 border border-neutral-200 dark:border-neutral-700 shadow-sm">
+          <Avatar className="h-16 w-16">
             <AvatarImage src={props.imgSrc} />
             <AvatarFallback className="text-xl font-medium uppercase">
               <User size={32} />

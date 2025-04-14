@@ -3,6 +3,7 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Cube } from "@phosphor-icons/react";
+import { User } from "@phosphor-icons/react";
 
 type ArticleCardProps = {
   id: string;
@@ -53,14 +54,15 @@ export const ArticleCard = (props: ArticleCardProps) => {
         </div>
 
         {/* 投稿者情報と日付 - 常に下部に表示 */}
+        {/* 将来的にユーザーのプロフィール画像や名前を表示する */}
         <div className="flex items-center gap-3 mt-auto pt-3 border-t border-neutral-100 dark:border-neutral-800">
           <Avatar className="h-8 w-8">
             <AvatarFallback className="text-xs bg-neutral-200 dark:bg-neutral-700">
-              {props.userId.substring(0, 2).toUpperCase()}
+              <User size={16} />
             </AvatarFallback>
           </Avatar>
           <div>
-            <div className="text-sm font-medium">{props.userId}</div>
+            <div className="text-sm font-medium">@{props.userId}</div>
             <div className="text-xs text-neutral-500">{formattedDate}</div>
           </div>
         </div>
