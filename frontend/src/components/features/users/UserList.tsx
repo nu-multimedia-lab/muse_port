@@ -9,7 +9,7 @@ export const UserList = async () => {
 
     return (
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {users.map((user) => (
             <Link key={user.id} href={`/members/${user.id}`}>
               <UserCard

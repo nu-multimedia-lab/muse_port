@@ -1,5 +1,8 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { User } from "@phosphor-icons/react";
 
 type UserCardProps = {
   imgSrc: string | undefined;
@@ -16,7 +19,7 @@ export const UserCard = (props: UserCardProps) => {
           <Avatar className="h-16 w-16 border border-neutral-200 dark:border-neutral-700 shadow-sm">
             <AvatarImage src={props.imgSrc} />
             <AvatarFallback className="text-xl font-medium uppercase">
-              {props.userName[0] + (props.userName[1] || "")}
+              <User size={32} />
             </AvatarFallback>
           </Avatar>
 

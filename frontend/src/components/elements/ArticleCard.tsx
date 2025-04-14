@@ -2,7 +2,7 @@
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Image } from "@phosphor-icons/react";
+import { Cube } from "@phosphor-icons/react";
 
 type ArticleCardProps = {
   id: string;
@@ -26,16 +26,14 @@ export const ArticleCard = (props: ArticleCardProps) => {
       {/* サムネイル画像エリア - アスペクト比を保持 */}
       <div className="w-full aspect-[16/9] bg-secondary relative">
         <div className="absolute inset-0 flex items-center justify-center text-neutral-400 dark:text-neutral-500">
-          <Image size={48} />
+          <Cube size={48} />
         </div>
       </div>
 
       {/* コンテンツエリア - 残りの高さを占める */}
       <div className="flex flex-col flex-grow p-5">
         {/* タイトルのみ表示 - 常に2行まで表示 */}
-        <h3 className="text-xl font-bold mb-3 line-clamp-2 min-h-[3.5rem]">
-          {props.title}
-        </h3>
+        <h3 className="text-xl font-bold mb-3 break-words">{props.title}</h3>
 
         {/* タグエリア - タグが存在しない場合は「タグ未設定」と表示 */}
         <div className="mb-4">
