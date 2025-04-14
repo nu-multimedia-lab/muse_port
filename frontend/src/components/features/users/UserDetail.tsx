@@ -8,19 +8,15 @@ type UserDetailProps = {
 };
 
 export const UserDetail = async (props: UserDetailProps) => {
-  try {
-    const user: User = await getUser(props.userId);
+  const user: User = await getUser(props.userId);
 
-    return (
-      <UserDetailElement
-        id={user.id}
-        username={user.username}
-        bio={user.bio}
-        imgSrc={undefined}
-        joinedAt={user.created_at}
-      />
-    );
-  } catch (error) {
-    notFound();
-  }
+  return (
+    <UserDetailElement
+      id={user.id}
+      username={user.username}
+      bio={user.bio}
+      imgSrc={undefined}
+      joinedAt={user.created_at}
+    />
+  );
 };
