@@ -4,13 +4,13 @@ import { getUser } from "@/lib/apis/user";
 import { Article, User } from "@/lib/types";
 import { notFound } from "next/navigation";
 
-type ArticleDetailProps = {
-  articleId: string;
+type WorkDetailProps = {
+  workId: string;
 };
 
-export const ArticleDetail = async (props: ArticleDetailProps) => {
+export const ArticleDetail = async (props: WorkDetailProps) => {
   try {
-    const article: Article = await getArticle(props.articleId);
+    const article: Article = await getArticle(props.workId);
     let author: User | null = null;
 
     try {
@@ -29,6 +29,7 @@ export const ArticleDetail = async (props: ArticleDetailProps) => {
         createdAt={article.created_at}
         authorId={article.user_id}
         authorName={author?.username || "Unknown Author"}
+        authorImgSrc={undefined} // 将来的に著者のアバター画像を実装できるようにしておく
       />
     );
   } catch (error) {

@@ -9,9 +9,9 @@ const WorkPage = ({ params }: { params: { workId: string } }) => {
     <div className="min-h-screen py-32">
       <div className="flex flex-col gap-8">
         <h1 className="text-4xl font-extrabold mx-auto">Work Detail</h1>
-        <div className="mx-auto max-w-[720px]">
+        <div className="mx-auto w-full max-w-3xl px-4">
           <Suspense fallback={<Loading />}>
-            <ArticleDetail articleId={workId} />
+            <ArticleDetail workId={workId} />
           </Suspense>
         </div>
       </div>

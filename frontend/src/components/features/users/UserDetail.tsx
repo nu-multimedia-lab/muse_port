@@ -17,6 +17,7 @@ export const UserDetail = async (props: UserDetailProps) => {
         username={user.username}
         bio={user.bio}
         imgSrc={undefined}
+        joinedAt={user.created_at}
       />
     );
   } catch (error) {
