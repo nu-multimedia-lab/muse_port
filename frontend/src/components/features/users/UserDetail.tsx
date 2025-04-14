@@ -14,9 +14,9 @@ export const UserDetail = async (props: UserDetailProps) => {
     <UserDetailElement
       id={user.id}
       username={user.username}
-      bio={user.bio}
+      bio={user.bio ?? null}
       imgSrc={undefined}
-      joinedAt={user.created_at}
+      joinedAt={new Date(user.created_at)}
     />
   );
 };

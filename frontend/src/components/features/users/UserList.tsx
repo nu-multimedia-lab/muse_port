@@ -15,7 +15,7 @@ export const UserList = async () => {
               imgSrc={undefined}
               userId={user.id}
               userName={user.username}
-              bio={user.bio}
+              bio={user.bio ?? null}
             />
           </Link>
         ))}

@@ -15,9 +15,9 @@ export const ArticleList = async () => {
               id={article.id}
               userId={article.user_id}
               title={article.title}
-              tags={article.tags}
+              tags={article.tags ?? null}
               content={article.content}
-              createdAt={article.created_at}
+              createdAt={new Date(article.created_at)}
             />
           </Link>
         ))}

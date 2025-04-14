@@ -24,8 +24,8 @@ export const ArticleDetail = async (props: WorkDetailProps) => {
       id={article.id}
       title={article.title}
       content={article.content}
-      tags={article.tags}
-      createdAt={article.created_at}
+      tags={article.tags ?? null}
+      createdAt={new Date(article.created_at)}
       authorId={article.user_id}
       authorName={author?.username || "Unknown Author"}
       authorImgSrc={undefined} // 将来的に著者のアバター画像を実装できるようにしておく
