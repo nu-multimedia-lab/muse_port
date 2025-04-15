@@ -1,3 +1,5 @@
+// frontend/src/lib/apis/apiClient.ts
+
 import axios, {
   AxiosError,
   AxiosInstance,
@@ -15,6 +17,30 @@ export interface ApiErrorResponse {
   status_code?: number;
 }
 
+// URLを正規化する関数（末尾のスラッシュを一貫して扱う）
+const normalizeUrl = (url: string): string => {
+  // クエリパラメータがある場合は末尾スラッシュを追加しない
+  if (url.includes("?")) {
+    return url;
+  }
+
+  // ID指定のパスパラメータを検出する正規表現
+  // 例：/users/123 や /articles/abc-def など
+  const idPathPattern = /\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/;
+
+  // ID指定のパスパラメータでも末尾スラッシュは追加しない
+  if (idPathPattern.test(url)) {
+    return url;
+  }
+
+  // その他の場合は末尾スラッシュを追加
+  if (!url.endsWith("/")) {
+    return `${url}/`;
+  }
+
+  return url;
+};
+
 // 共通のAPIクライアントを作成
 export const createApiClient = (
   baseUrl: string = API_BASE_URL,
@@ -31,8 +57,10 @@ export const createApiClient = (
   // リクエストインターセプター
   client.interceptors.request.use(
     (config) => {
-      // ここにリクエスト前の処理を追加
-      // 例: authトークンの追加など
+      // URLを正規化
+      if (config.url) {
+        config.url = normalizeUrl(config.url);
+      }
       return config;
     },
     (error) => {
@@ -47,7 +75,14 @@ export const createApiClient = (
     },
     (error: AxiosError<ApiErrorResponse>) => {
       // エラーハンドリング
-      console.error("API Error:", error.response?.data || error.message);
+      console.error(
+        "API Error:",
+        error.response?.data || error.message,
+        "Status:",
+        error.response?.status,
+        "URL:",
+        error.config?.url
+      );
 
       // カスタムエラーオブジェクトを作成
       const customError = {
