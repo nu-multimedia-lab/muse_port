@@ -1,33 +1,40 @@
 import { User, UserCreate, UserUpdate } from "@/lib/types";
-import axios, { AxiosInstance } from "axios";
+import { api, API_ENDPOINTS } from "@/lib/apis/apiClient";
 
-const apiClient: AxiosInstance = axios.create({
-  baseURL: `${process.env.BACKEND_API_URL}/users`,
-});
-
-const getAllUsers = async (): Promise<User[]> => {
-  const res: User[] = await apiClient.get("/").then((res) => res.data);
-  return res;
+/**
+ * 全ユーザー情報を取得する
+ */
+export const getAllUsers = async (): Promise<User[]> => {
+  return api.get<User[]>(API_ENDPOINTS.USERS);
 };
 
-const getUser = async (id: string): Promise<User> => {
-  const res: User = await apiClient.get(`/${id}`).then((res) => res.data);
-  return res;
+/**
+ * 指定したIDのユーザー情報を取得する
+ */
+export const getUser = async (id: string): Promise<User> => {
+  return api.get<User>(`${API_ENDPOINTS.USERS}/${id}`);
 };
 
-const createUser = async (data: UserCreate): Promise<User> => {
-  const res: User = await apiClient.post("/", data).then((res) => res.data);
-  return res;
+/**
+ * 新しいユーザーを作成する
+ */
+export const createUser = async (data: UserCreate): Promise<User> => {
+  return api.post<User, UserCreate>(API_ENDPOINTS.USERS, data);
 };
 
-const updateUser = async (id: string, data: UserUpdate): Promise<User> => {
-  const res: User = await apiClient.put(`/${id}`, data).then((res) => res.data);
-  return res;
+/**
+ * ユーザー情報を更新する
+ */
+export const updateUser = async (
+  id: string,
+  data: UserUpdate
+): Promise<User> => {
+  return api.put<User, UserUpdate>(`${API_ENDPOINTS.USERS}/${id}`, data);
 };
 
-const deleteUser = async (id: string): Promise<User> => {
-  const res: User = await apiClient.delete(`/${id}`).then((res) => res.data);
-  return res;
+/**
+ * ユーザーを削除する
+ */
+export const deleteUser = async (id: string): Promise<User> => {
+  return api.delete<User>(`${API_ENDPOINTS.USERS}/${id}`);
 };
-
-export { getAllUsers, getUser, createUser, updateUser, deleteUser };

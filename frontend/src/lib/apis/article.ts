@@ -1,44 +1,43 @@
 import { Article, ArticleCreate, ArticleUpdate } from "@/lib/types";
-import axios, { AxiosInstance } from "axios";
+import { api, API_ENDPOINTS } from "@/lib/apis/apiClient";
 
-const apiClient: AxiosInstance = axios.create({
-  baseURL: `${process.env.BACKEND_API_URL}/articles`,
-});
-
-const getAllArticles = async (): Promise<Article[]> => {
-  const res: Article[] = await apiClient.get("/").then((res) => res.data);
-  return res;
+/**
+ * 全記事を取得する
+ */
+export const getAllArticles = async (): Promise<Article[]> => {
+  return api.get<Article[]>(API_ENDPOINTS.ARTICLES);
 };
 
-const getArticle = async (id: string): Promise<Article> => {
-  const res: Article = await apiClient.get(`/${id}`).then((res) => res.data);
-  return res;
+/**
+ * 指定したIDの記事を取得する
+ */
+export const getArticle = async (id: string): Promise<Article> => {
+  return api.get<Article>(`${API_ENDPOINTS.ARTICLES}/${id}`);
 };
 
-const createArticle = async (data: ArticleCreate): Promise<Article> => {
-  const res: Article = await apiClient.post("/", data).then((res) => res.data);
-  return res;
+/**
+ * 新しい記事を作成する
+ */
+export const createArticle = async (data: ArticleCreate): Promise<Article> => {
+  return api.post<Article, ArticleCreate>(API_ENDPOINTS.ARTICLES, data);
 };
 
-const updateArticle = async (
+/**
+ * 記事を更新する
+ */
+export const updateArticle = async (
   id: string,
   data: ArticleUpdate
 ): Promise<Article> => {
-  const res: Article = await apiClient
-    .put(`/${id}`, data)
-    .then((res) => res.data);
-  return res;
+  return api.put<Article, ArticleUpdate>(
+    `${API_ENDPOINTS.ARTICLES}/${id}`,
+    data
+  );
 };
 
-const deleteArticle = async (id: string): Promise<Article> => {
-  const res: Article = await apiClient.delete(`/${id}`).then((res) => res.data);
-  return res;
-};
-
-export {
-  getAllArticles,
-  getArticle,
-  createArticle,
-  updateArticle,
-  deleteArticle,
+/**
+ * 記事を削除する
+ */
+export const deleteArticle = async (id: string): Promise<Article> => {
+  return api.delete<Article>(`${API_ENDPOINTS.ARTICLES}/${id}`);
 };

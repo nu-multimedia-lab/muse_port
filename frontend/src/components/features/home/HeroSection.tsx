@@ -1,16 +1,19 @@
 import React from "react";
 import Link from "next/link";
+import { CaretDown } from "@phosphor-icons/react";
 
 export const HeroSection: React.FC = () => {
   return (
-    <section className="relative h-[80vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 text-white">
+    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600 text-white">
       <div className="absolute inset-0 bg-black opacity-30"></div>
       <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
         <h1 className="text-4xl md:text-6xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100">
           MUSE PORT
         </h1>
         <p className="text-xl md:text-2xl font-semibold mb-8">
-          長崎大学マルチメディア研究会 創作ポータル
+          長崎大学マルチメディア研究会
+          <br />
+          創作ポータル
         </p>
         <p className="text-lg md:text-xl mb-10 max-w-2xl mx-auto">
           MUSE
@@ -30,6 +33,9 @@ export const HeroSection: React.FC = () => {
           >
             部員紹介を見る
           </Link>
+        </div>
+        <div className="mt-20 animate-bounce">
+          <CaretDown size={24} weight="bold" className="mx-auto" />
         </div>
       </div>
     </section>

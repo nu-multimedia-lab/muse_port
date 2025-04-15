@@ -1,34 +1,25 @@
-import { UserCard } from "@/components/elements/UserCard";
+import { UserCard } from "@/components/features/users/elements/UserCard";
 import { getAllUsers } from "@/lib/apis/user";
 import { User } from "@/lib/types";
 import Link from "next/link";
 
-export const MemberList = async () => {
-  try {
-    const users: User[] = await getAllUsers();
+export const UserList = async () => {
+  const users: User[] = await getAllUsers();
 
-    return (
-      <div className="grid grid-cols-1 gap-8 w-[640px]">
+  return (
+    <div className="container mx-auto px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {users.map((user) => (
-          <div key={user.id}>
-            <Link href={`/members/${user.id}`}>
-              <UserCard
-                imgSrc={undefined}
-                userId={user.id}
-                userName={user.username}
-                bio={user.bio}
-              />
-            </Link>
-          </div>
+          <Link key={user.id} href={`/members/${user.id}`}>
+            <UserCard
+              imgSrc={undefined}
+              userId={user.id}
+              userName={user.username}
+              bio={user.bio ?? null}
+            />
+          </Link>
         ))}
       </div>
-    );
-  } catch (error) {
-    return (
-      <div>
-        <p>情報の取得に失敗しました。</p>
-        <p>復旧までしばらくお待ちください。</p>
-      </div>
-    );
-  }
+    </div>
+  );
 };

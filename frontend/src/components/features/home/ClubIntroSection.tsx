@@ -32,7 +32,7 @@ export const ClubIntroSection: React.FC = () => {
                   <Calendar size={24} weight="fill" />
                 </div>
                 <span className="text-gray-700 dark:text-gray-300">
-                  設立：2010年
+                  設立：2017年
                 </span>
               </div>
             </div>

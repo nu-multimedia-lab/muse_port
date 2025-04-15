@@ -1,6 +1,5 @@
 "use client";
 
-import { ModeToggle } from "@/components/elements/ModeToggle";
 import { FooterLogo } from "./footer/FooterLogo";
 import { FooterLinks } from "./footer/FooterLinks";
 import { SocialLinks } from "./footer/SocialLinks";
