@@ -11,34 +11,57 @@ import axios, {
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_BACKEND_API_URL || "http://localhost:8000";
 
-// エラーレスポンスの型を定義
+// API関連の型定義
 export interface ApiErrorResponse {
   detail: string;
   status_code?: number;
 }
 
+export interface ApiCustomError {
+  status: number;
+  message: string;
+  data?: ApiErrorResponse;
+}
+
+export type HttpMethod = "get" | "post" | "put" | "delete";
+
+// APIエラーをフォーマットする共通関数
+const formatApiError = (
+  error: AxiosError<ApiErrorResponse>
+): ApiCustomError => {
+  // エラー情報をログに記録
+  console.error(
+    "API Error:",
+    error.response?.data || error.message,
+    "Status:",
+    error.response?.status,
+    "URL:",
+    error.config?.url
+  );
+
+  // カスタムエラーオブジェクトを返す
+  return {
+    status: error.response?.status || 500,
+    message:
+      error.response?.data?.detail ||
+      "サーバーとの通信中にエラーが発生しました",
+    data: error.response?.data,
+  };
+};
+
 // URLを正規化する関数（末尾のスラッシュを一貫して扱う）
 const normalizeUrl = (url: string): string => {
-  // クエリパラメータがある場合は末尾スラッシュを追加しない
-  if (url.includes("?")) {
-    return url;
-  }
+  // 以下の場合は末尾スラッシュを追加しない:
+  // 1. すでに末尾がスラッシュ
+  // 2. クエリパラメータ(?を含む)がある
+  // 3. /users/123 のような特定IDを指す形式
 
-  // ID指定のパスパラメータを検出する正規表現
-  // 例：/users/123 や /articles/abc-def など
-  const idPathPattern = /\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/;
+  // 追加不要条件をチェック
+  const hasTrailingSlash = url.endsWith("/");
+  const hasQueryParams = url.includes("?");
+  const isIdPattern = /\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+$/.test(url);
 
-  // ID指定のパスパラメータでも末尾スラッシュは追加しない
-  if (idPathPattern.test(url)) {
-    return url;
-  }
-
-  // その他の場合は末尾スラッシュを追加
-  if (!url.endsWith("/")) {
-    return `${url}/`;
-  }
-
-  return url;
+  return hasTrailingSlash || hasQueryParams || isIdPattern ? url : `${url}/`;
 };
 
 // 共通のAPIクライアントを作成
@@ -75,25 +98,7 @@ export const createApiClient = (
     },
     (error: AxiosError<ApiErrorResponse>) => {
       // エラーハンドリング
-      console.error(
-        "API Error:",
-        error.response?.data || error.message,
-        "Status:",
-        error.response?.status,
-        "URL:",
-        error.config?.url
-      );
-
-      // カスタムエラーオブジェクトを作成
-      const customError = {
-        status: error.response?.status || 500,
-        message:
-          error.response?.data?.detail ||
-          "サーバーとの通信中にエラーが発生しました",
-        data: error.response?.data,
-      };
-
-      return Promise.reject(customError);
+      return Promise.reject(formatApiError(error));
     }
   );
 
@@ -111,28 +116,42 @@ export const API_ENDPOINTS = {
 
 // 汎用的なAPI関数
 export const api = {
-  get: async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
-    const response: AxiosResponse<T> = await apiClient.get(url, config);
+  // 共通の処理を行うヘルパー関数
+  request: async <T>(
+    method: HttpMethod,
+    url: string,
+    data?: any,
+    config?: AxiosRequestConfig
+  ): Promise<T> => {
+    const response: AxiosResponse<T> = await (method === "get" ||
+    method === "delete"
+      ? apiClient[method](url, config)
+      : apiClient[method](url, data, config));
     return response.data;
   },
+
+  // 各HTTPメソッドの関数定義
+  get: async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
+    return api.request<T>("get", url, undefined, config);
+  },
+
   post: async <T, D = any>(
     url: string,
     data?: D,
     config?: AxiosRequestConfig
   ): Promise<T> => {
-    const response: AxiosResponse<T> = await apiClient.post(url, data, config);
-    return response.data;
+    return api.request<T>("post", url, data, config);
   },
+
   put: async <T, D = any>(
     url: string,
     data?: D,
     config?: AxiosRequestConfig
   ): Promise<T> => {
-    const response: AxiosResponse<T> = await apiClient.put(url, data, config);
-    return response.data;
+    return api.request<T>("put", url, data, config);
   },
+
   delete: async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
-    const response: AxiosResponse<T> = await apiClient.delete(url, config);
-    return response.data;
+    return api.request<T>("delete", url, undefined, config);
   },
 };
