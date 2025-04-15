@@ -1,4 +1,4 @@
-import { UserCard } from "@/components/elements/UserCard";
+import { UserCard } from "@/components/features/users/elements/UserCard";
 import { getAllUsers } from "@/lib/apis/user";
 import { User } from "@/lib/types";
 import Link from "next/link";

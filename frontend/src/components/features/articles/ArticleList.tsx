@@ -1,4 +1,4 @@
-import { ArticleCard } from "@/components/elements/ArticleCard";
+import { ArticleCard } from "@/components/features/articles/elements/ArticleCard";
 import { getAllArticles } from "@/lib/apis/article";
 import { Article } from "@/lib/types";
 import Link from "next/link";

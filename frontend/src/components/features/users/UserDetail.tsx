@@ -1,7 +1,6 @@
-import { UserDetailElement } from "@/components/elements/UserDetailElement";
+import { UserDetailElement } from "@/components/features/users/elements/UserDetailElement";
 import { getUser } from "@/lib/apis/user";
 import { User } from "@/lib/types";
-import { notFound } from "next/navigation";
 
 type UserDetailProps = {
   userId: string;

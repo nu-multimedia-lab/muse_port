@@ -1,8 +1,7 @@
-import { ArticleDetailElement } from "@/components/elements/ArticleDetailElement";
+import { ArticleDetailElement } from "@/components/features/articles/elements/ArticleDetailElement";
 import { getArticle } from "@/lib/apis/article";
 import { getUser } from "@/lib/apis/user";
 import { Article, User } from "@/lib/types";
-import { notFound } from "next/navigation";
 
 type WorkDetailProps = {
   workId: string;
