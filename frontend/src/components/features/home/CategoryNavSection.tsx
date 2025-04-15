@@ -93,7 +93,7 @@ export const CategoryNavSection: React.FC = () => {
             href="/works"
             className="inline-flex items-center px-6 py-3 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-medium transition-colors"
           >
-            <span>その他のカテゴリーを見る</span>
+            <span>作品一覧を見る</span>
             <ArrowRight size={18} className="ml-2" />
           </Link>
         </div>
