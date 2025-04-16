@@ -1,6 +1,6 @@
 import Loading from "@/app/works/[workId]/loading";
-import { ArticleDetail } from "@/components/features/articles/ArticleDetail";
-import React, { Suspense } from "react";
+import { ArticleDetailContainer } from "@/components/features/articles/ArticleDetailContainer";
+import { Suspense } from "react";
 
 const WorkPage = ({ params }: { params: { workId: string } }) => {
   const workId: string = params.workId;
@@ -10,7 +10,7 @@ const WorkPage = ({ params }: { params: { workId: string } }) => {
       <div className="flex flex-col gap-8">
         <div className="mx-auto w-full max-w-3xl px-4">
           <Suspense fallback={<Loading />}>
-            <ArticleDetail workId={workId} />
+            <ArticleDetailContainer workId={workId} />
           </Suspense>
         </div>
       </div>

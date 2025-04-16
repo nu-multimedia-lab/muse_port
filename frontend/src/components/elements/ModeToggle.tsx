@@ -1,9 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { Moon, Sun, Desktop, Check } from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,

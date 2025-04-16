@@ -1,10 +1,12 @@
+"use client";
+
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Calendar, User } from "@phosphor-icons/react";
-import { UserWorksSection } from "./UserWorksSection";
+import { UserWorksSection } from "./elements/UserWorksSection";
 
-type UserDetailProps = {
+type UserDetailPresentationProps = {
   id: string;
   username: string;
   bio: string | null;
@@ -12,7 +14,7 @@ type UserDetailProps = {
   joinedAt?: Date;
 };
 
-export const UserDetailElement = (props: UserDetailProps) => {
+export const UserDetailPresentation = (props: UserDetailPresentationProps) => {
   const [activeTab, setActiveTab] = useState<"profile" | "works">("profile");
 
   // Format the joined date if available

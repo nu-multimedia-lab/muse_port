@@ -1,16 +1,18 @@
-import { UserDetailElement } from "@/components/features/users/elements/UserDetailElement";
+import { UserDetailPresentation } from "./UserDetailPresentation";
 import { getUser } from "@/lib/apis/user";
 import { User } from "@/lib/types";
 
-type UserDetailProps = {
+type UserDetailContainerProps = {
   userId: string;
 };
 
-export const UserDetail = async (props: UserDetailProps) => {
-  const user: User = await getUser(props.userId);
+export const UserDetailContainer = async ({
+  userId,
+}: UserDetailContainerProps) => {
+  const user: User = await getUser(userId);
 
   return (
-    <UserDetailElement
+    <UserDetailPresentation
       id={user.id}
       username={user.username}
       bio={user.bio ?? null}

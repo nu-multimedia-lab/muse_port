@@ -1,6 +1,5 @@
-import React from "react";
 import Link from "next/link";
-import { CaretDown } from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react/dist/ssr";
 
 export const HeroSection: React.FC = () => {
   return (

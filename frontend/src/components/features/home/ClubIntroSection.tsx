@@ -1,5 +1,4 @@
-import React from "react";
-import { User, Calendar } from "@phosphor-icons/react";
+import { User, Calendar } from "@phosphor-icons/react/dist/ssr";
 
 export const ClubIntroSection: React.FC = () => {
   return (

@@ -1,9 +1,6 @@
-"use client";
-
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Cube } from "@phosphor-icons/react";
-import { User } from "@phosphor-icons/react";
+import { Cube, User } from "@phosphor-icons/react/dist/ssr";
 
 type ArticleCardProps = {
   id: string;

@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { ArrowLeft, Calendar, User } from "@phosphor-icons/react/dist/ssr";
 
-type ArticleDetailProps = {
+type ArticleDetailPresentationProps = {
   id: string;
   title: string;
   content: string;
@@ -14,7 +14,9 @@ type ArticleDetailProps = {
   authorImgSrc?: string;
 };
 
-export const ArticleDetailElement = (props: ArticleDetailProps) => {
+export const ArticleDetailPresentation = (
+  props: ArticleDetailPresentationProps
+) => {
   // Format the date for display
   const formattedDate = new Date(props.createdAt).toLocaleDateString("ja-JP", {
     year: "numeric",

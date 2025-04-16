@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -8,7 +7,7 @@ import {
   MusicNotes,
   Code,
   VideoCamera,
-} from "@phosphor-icons/react";
+} from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/lib/data/dummy";
 
 // アイコンのマッピング

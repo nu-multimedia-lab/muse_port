@@ -1,7 +1,7 @@
-import { UserList } from "@/components/features/users/UserList";
 import Loading from "@/app/members/loading";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { UsersThree } from "@phosphor-icons/react/dist/ssr";
+import { UserListContainer } from "@/components/features/users/UserListContainer";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +17,7 @@ const MembersPage = () => {
             </h1>
           </div>
           <Suspense fallback={<Loading />}>
-            <UserList />
+            <UserListContainer />
           </Suspense>
         </div>
       </div>

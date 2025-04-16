@@ -1,6 +1,4 @@
-"use client";
-
-import { Flask } from "@phosphor-icons/react";
+import { Flask } from "@phosphor-icons/react/dist/ssr";
 
 const BetaBanner = () => {
   return (

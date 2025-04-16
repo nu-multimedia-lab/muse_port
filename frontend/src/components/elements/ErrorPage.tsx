@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { WarningCircle } from "@phosphor-icons/react";
+import { WarningCircle } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 
 type ErrorPageProps = {

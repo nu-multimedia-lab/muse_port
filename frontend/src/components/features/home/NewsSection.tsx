@@ -1,4 +1,3 @@
-import React from "react";
 import { news } from "@/lib/data/dummy";
 
 export const NewsSection: React.FC = () => {
