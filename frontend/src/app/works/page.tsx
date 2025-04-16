@@ -1,7 +1,7 @@
 import Loading from "@/app/works/loading";
 import { Suspense } from "react";
 import { Cube } from "@phosphor-icons/react/dist/ssr";
-import { ArticleListContainer } from "@/components/features/articles/ArticleListContainer";
+import { ArticleListContainer } from "@/components/pages/articles/ArticleListContainer";
 
 export const dynamic = "force-dynamic";
 

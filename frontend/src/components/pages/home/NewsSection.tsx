@@ -1,4 +1,4 @@
-import { news } from "@/lib/data/dummy";
+import { news } from "@/constants/dummy";
 
 export const NewsSection: React.FC = () => {
   return (

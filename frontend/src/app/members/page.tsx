@@ -1,7 +1,7 @@
 import Loading from "@/app/members/loading";
 import { Suspense } from "react";
 import { UsersThree } from "@phosphor-icons/react/dist/ssr";
-import { UserListContainer } from "@/components/features/users/UserListContainer";
+import { UserListContainer } from "@/components/pages/members/UserListContainer";
 
 export const dynamic = "force-dynamic";
 

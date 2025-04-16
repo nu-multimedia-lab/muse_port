@@ -1,5 +1,5 @@
 import Loading from "@/app/members/[userId]/loading";
-import { UserDetailContainer } from "@/components/features/users/UserDetailContainer";
+import { UserDetailContainer } from "@/components/pages/members/UserDetailContainer";
 import { Suspense } from "react";
 
 const MemberPage = ({ params }: { params: { userId: string } }) => {

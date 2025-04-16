@@ -1,4 +1,4 @@
-import { HomeContainer } from "@/components/features/home/HomeContainer";
+import { HomeContainer } from "@/components/pages/home/HomeContainer";
 
 const Home = () => {
   return <HomeContainer />;

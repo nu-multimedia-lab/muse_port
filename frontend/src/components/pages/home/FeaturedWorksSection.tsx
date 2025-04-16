@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import { featuredWorks } from "@/lib/data/dummy";
+import { featuredWorks } from "@/constants/dummy";
 
 export const FeaturedWorksSection: React.FC = () => {
   return (

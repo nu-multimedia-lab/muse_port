@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ModeToggle } from "@/components/elements/ModeToggle";
+import { ModeToggle } from "@/components/common/ModeToggle";
 import { Button } from "@/components/ui/button";
 import { List, X } from "@phosphor-icons/react";
 import { Logo } from "./header/Logo";

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import { categories } from "@/lib/data/dummy";
+import { categories } from "@/constants/dummy";
 import { CategoryItem } from "./elements/CategoryItem";
 import { type ColorName, type IconName } from "@/lib/utils/categoryUtils";
 
