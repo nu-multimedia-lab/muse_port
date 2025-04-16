@@ -16,6 +16,15 @@ export const getArticle = async (id: string): Promise<Article> => {
 };
 
 /**
+ * 指定したユーザーIDの記事を取得する
+ */
+export const getArticlesByUserId = async (
+  userId: string
+): Promise<Article[]> => {
+  return api.get<Article[]>(`${API_ENDPOINTS.ARTICLES}?user_id=${userId}`);
+};
+
+/**
  * 新しい記事を作成する
  */
 export const createArticle = async (data: ArticleCreate): Promise<Article> => {

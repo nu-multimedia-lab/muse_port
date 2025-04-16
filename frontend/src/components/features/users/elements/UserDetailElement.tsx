@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Calendar } from "@phosphor-icons/react";
+import { UserWorksSection } from "./UserWorksSection";
 
 type UserDetailProps = {
   id: string;
@@ -13,6 +15,8 @@ type UserDetailProps = {
 };
 
 export const UserDetailElement = (props: UserDetailProps) => {
+  const [activeTab, setActiveTab] = useState<"profile" | "works">("profile");
+
   // Format the joined date if available
   const formattedDate = props.joinedAt
     ? new Date(props.joinedAt).toLocaleDateString("ja-JP", {
@@ -44,20 +48,45 @@ export const UserDetailElement = (props: UserDetailProps) => {
 
       {/* メイン情報 */}
       <div className="border rounded-lg overflow-hidden">
-        {/* タブナビゲーション (現在は単一タブのみ) */}
+        {/* タブナビゲーション */}
         <div className="flex border-b">
-          <div className="py-2 px-4 font-medium">プロフィール</div>
+          <button
+            className={`py-2 px-4 font-medium ${
+              activeTab === "profile"
+                ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-400"
+                : "text-gray-500 hover:text-blue-500 transition-colors"
+            }`}
+            onClick={() => setActiveTab("profile")}
+          >
+            プロフィール
+          </button>
+          <button
+            className={`py-2 px-4 font-medium ${
+              activeTab === "works"
+                ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-400"
+                : "text-gray-500 hover:text-blue-500 transition-colors"
+            }`}
+            onClick={() => setActiveTab("works")}
+          >
+            投稿作品
+          </button>
         </div>
 
-        {/* プロフィール内容 */}
+        {/* コンテンツエリア */}
         <div className="p-6">
-          {/* 自己紹介 */}
-          <div className="mb-8">
-            <h2 className="text-lg font-medium mb-3">自己紹介</h2>
-            <p className="whitespace-pre-line text-neutral-700 dark:text-neutral-300 leading-relaxed">
-              {props.bio == null ? "記述なし" : props.bio}
-            </p>
-          </div>
+          {activeTab === "profile" ? (
+            <div>
+              <h2 className="text-lg font-medium mb-3">自己紹介</h2>
+              <p className="whitespace-pre-line text-neutral-700 dark:text-neutral-300 leading-relaxed">
+                {props.bio == null ? "記述なし" : props.bio}
+              </p>
+            </div>
+          ) : (
+            <div>
+              <h2 className="text-lg font-medium mb-4">投稿作品</h2>
+              <UserWorksSection userId={props.id} />
+            </div>
+          )}
         </div>
       </div>
 
