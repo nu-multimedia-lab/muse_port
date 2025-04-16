@@ -2,21 +2,21 @@
 
 ## USERS
 
-- user_id (PK)
+- id (PK)
 - username
 - bio
 - created_at
 
 ## ARTICLES
 
-- article_id (PK)
+- id (PK)
 - user_id (FK)
 - title
-- description
-- media_url
-- media_type
+- content
+- media (list(URL, type, order))
 - tags (list)
 - created_at
+- updated_at
 
 ## COMMENTS
 
