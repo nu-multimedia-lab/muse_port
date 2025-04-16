@@ -3,7 +3,7 @@ from app.schemas.work import Work
 
 
 class WorkCRUD(CRUD[Work]):
-    table_name = "works"
+    table_name = "works" # DynamoDBのテーブル名（現在使用しているのはarticlesなので要変更）
     model_class = Work
     id_length = 12
 
