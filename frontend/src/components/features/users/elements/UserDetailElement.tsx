@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Calendar } from "@phosphor-icons/react";
+import { Calendar, User } from "@phosphor-icons/react";
 import { UserWorksSection } from "./UserWorksSection";
 
 type UserDetailProps = {
@@ -33,7 +33,7 @@ export const UserDetailElement = (props: UserDetailProps) => {
         <Avatar className="h-24 w-24 mb-4">
           <AvatarImage src={props.imgSrc} />
           <AvatarFallback className="text-3xl uppercase">
-            {props.username[0] + (props.username[1] || "")}
+            <User size={48} />
           </AvatarFallback>
         </Avatar>
         <h1 className="text-2xl font-bold mb-1">{props.username}</h1>
