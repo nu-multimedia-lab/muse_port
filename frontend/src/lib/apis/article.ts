@@ -21,7 +21,7 @@ export const getArticle = async (id: string): Promise<Article> => {
 export const getArticlesByUserId = async (
   userId: string
 ): Promise<Article[]> => {
-  return api.get<Article[]>(`${API_ENDPOINTS.ARTICLES}?user_id=${userId}`);
+  return api.get<Article[]>(`${API_ENDPOINTS.ARTICLES}/?user_id=${userId}`);
 };
 
 /**

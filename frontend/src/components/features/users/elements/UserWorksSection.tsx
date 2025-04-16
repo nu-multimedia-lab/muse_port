@@ -11,11 +11,8 @@ export const UserWorksSection = async ({ userId }: UserWorksSectionProps) => {
   let articles: Article[] = [];
 
   try {
-    // APIからデータを取得
     const fetchedArticles = await getArticlesByUserId(userId);
-
-    // ログ出力でデバッグ
-    console.log(`Fetched articles for user ${userId}:`, fetchedArticles);
+    articles = fetchedArticles;
   } catch (error) {
     console.error(`Failed to fetch works for user ${userId}:`, error);
   }
