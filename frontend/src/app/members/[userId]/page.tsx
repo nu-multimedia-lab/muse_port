@@ -1,6 +1,6 @@
 import Loading from "@/app/members/[userId]/loading";
-import { UserDetail } from "@/components/features/users/UserDetail";
-import React, { Suspense } from "react";
+import { UserDetailContainer } from "@/components/pages/members/UserDetailContainer";
+import { Suspense } from "react";
 
 const MemberPage = ({ params }: { params: { userId: string } }) => {
   const userId: string = params.userId;
@@ -10,7 +10,7 @@ const MemberPage = ({ params }: { params: { userId: string } }) => {
       <div className="flex flex-col gap-8">
         <div className="mx-auto w-full max-w-3xl px-4">
           <Suspense fallback={<Loading />}>
-            <UserDetail userId={userId} />
+            <UserDetailContainer userId={userId} />
           </Suspense>
         </div>
       </div>

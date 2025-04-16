@@ -16,18 +16,19 @@ const Loading = () => {
         {/* タブナビゲーション */}
         <div className="flex border-b">
           <Skeleton className="h-10 w-24 ml-4 my-2" />
+          <Skeleton className="h-10 w-24 ml-4 my-2" />
         </div>
 
         {/* プロフィール内容 */}
         <div className="p-6">
-          {/* 自己紹介 */}
-          <div className="mb-8">
-            <Skeleton className="h-7 w-32 mb-3" />
-            <div className="space-y-3">
-              <Skeleton className="h-5 w-full" />
-              <Skeleton className="h-5 w-full" />
-              <Skeleton className="h-5 w-4/5" />
-            </div>
+          {/* タイトル */}
+          <Skeleton className="h-7 w-32 mb-3" />
+
+          {/* コンテンツ */}
+          <div className="space-y-3">
+            <Skeleton className="h-5 w-full" />
+            <Skeleton className="h-5 w-full" />
+            <Skeleton className="h-5 w-4/5" />
           </div>
         </div>
       </div>
