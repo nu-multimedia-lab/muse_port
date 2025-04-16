@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Calendar, User } from "@phosphor-icons/react";
+import { UserProfileHeader } from "./UserProfileHeader";
+import { ProfileTabs } from "./ProfileTabs";
 import { UserWorksSection } from "./UserWorksSection";
 
 type UserDetailProps = {
@@ -12,81 +11,55 @@ type UserDetailProps = {
   joinedAt?: Date;
 };
 
+/**
+ * ユーザー詳細情報を表示するコンポーネント
+ * クライアントサイドでのタブ切り替えに対応したバージョン
+ */
 export const UserDetailElement = (props: UserDetailProps) => {
   const [activeTab, setActiveTab] = useState<"profile" | "works">("profile");
 
-  // Format the joined date if available
-  const formattedDate = props.joinedAt
-    ? new Date(props.joinedAt).toLocaleDateString("ja-JP", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : null;
+  // タブコンテンツを定義
+  const tabs = [
+    {
+      id: "profile",
+      label: "プロフィール",
+      content: (
+        <div>
+          <h2 className="text-lg font-medium mb-3">自己紹介</h2>
+          <p className="whitespace-pre-line text-neutral-700 dark:text-neutral-300 leading-relaxed">
+            {props.bio == null ? "記述なし" : props.bio}
+          </p>
+        </div>
+      ),
+    },
+    {
+      id: "works",
+      label: "投稿作品",
+      content: (
+        <div>
+          <h2 className="text-lg font-medium mb-4">投稿作品</h2>
+          <UserWorksSection userId={props.id} />
+        </div>
+      ),
+    },
+  ];
 
   return (
     <div className="w-full max-w-3xl mx-auto">
       {/* ヘッダー情報 */}
-      <div className="flex flex-col items-center text-center mb-8 pt-6">
-        <Avatar className="h-24 w-24 mb-4">
-          <AvatarImage src={props.imgSrc} />
-          <AvatarFallback className="text-3xl uppercase">
-            <User size={48} />
-          </AvatarFallback>
-        </Avatar>
-        <h1 className="text-2xl font-bold mb-1">{props.username}</h1>
-        <Badge variant="secondary">@{props.id}</Badge>　
-        {formattedDate && (
-          <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400 mt-1">
-            <Calendar size={16} className="mr-1" />
-            <span>{formattedDate}から参加</span>
-          </div>
-        )}
-      </div>
+      <UserProfileHeader
+        id={props.id}
+        username={props.username}
+        imgSrc={props.imgSrc}
+        joinedAt={props.joinedAt}
+      />
 
-      {/* メイン情報 */}
-      <div className="border rounded-lg overflow-hidden">
-        {/* タブナビゲーション */}
-        <div className="flex border-b">
-          <button
-            className={`py-2 px-4 font-medium ${
-              activeTab === "profile"
-                ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-400"
-                : "text-gray-500 hover:text-blue-500 transition-colors"
-            }`}
-            onClick={() => setActiveTab("profile")}
-          >
-            プロフィール
-          </button>
-          <button
-            className={`py-2 px-4 font-medium ${
-              activeTab === "works"
-                ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-400"
-                : "text-gray-500 hover:text-blue-500 transition-colors"
-            }`}
-            onClick={() => setActiveTab("works")}
-          >
-            投稿作品
-          </button>
-        </div>
-
-        {/* コンテンツエリア */}
-        <div className="p-6">
-          {activeTab === "profile" ? (
-            <div>
-              <h2 className="text-lg font-medium mb-3">自己紹介</h2>
-              <p className="whitespace-pre-line text-neutral-700 dark:text-neutral-300 leading-relaxed">
-                {props.bio == null ? "記述なし" : props.bio}
-              </p>
-            </div>
-          ) : (
-            <div>
-              <h2 className="text-lg font-medium mb-4">投稿作品</h2>
-              <UserWorksSection userId={props.id} />
-            </div>
-          )}
-        </div>
-      </div>
+      {/* メイン情報とタブ */}
+      <ProfileTabs
+        activeTab={activeTab}
+        onTabChange={(tab) => setActiveTab(tab as "profile" | "works")}
+        tabs={tabs}
+      />
 
       {/* フッター情報 */}
       <div className="mt-6 text-sm text-neutral-500 dark:text-neutral-400 text-right">

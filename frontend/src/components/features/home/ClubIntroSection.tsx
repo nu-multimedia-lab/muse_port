@@ -1,5 +1,10 @@
 import { User, Calendar } from "@phosphor-icons/react/dist/ssr";
+import { ClubStatItem } from "./elements/ClubStatItem";
 
+/**
+ * マルチメディア研究会の紹介セクションコンポーネント
+ * サークルの概要と基本情報を表示します
+ */
 export const ClubIntroSection: React.FC = () => {
   return (
     <section className="py-20 px-6 bg-white dark:bg-gray-900">
@@ -18,22 +23,14 @@ export const ClubIntroSection: React.FC = () => {
               定期的に勉強会や作品発表会を開催し、お互いのスキルを高め合っています。
             </p>
             <div className="flex flex-wrap gap-4">
-              <div className="flex items-center">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 mr-3">
-                  <User size={24} weight="fill" />
-                </div>
-                <span className="text-gray-700 dark:text-gray-300">
-                  現在の部員数：48名
-                </span>
-              </div>
-              <div className="flex items-center">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 mr-3">
-                  <Calendar size={24} weight="fill" />
-                </div>
-                <span className="text-gray-700 dark:text-gray-300">
-                  設立：2017年
-                </span>
-              </div>
+              <ClubStatItem
+                icon={<User size={24} weight="fill" />}
+                label="現在の部員数：48名"
+              />
+              <ClubStatItem
+                icon={<Calendar size={24} weight="fill" />}
+                label="設立：2017年"
+              />
             </div>
           </div>
           <div className="aspect-w-16 aspect-h-9 rounded-xl overflow-hidden shadow-xl">
