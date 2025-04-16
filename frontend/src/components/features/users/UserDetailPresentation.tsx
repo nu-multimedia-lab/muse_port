@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Calendar, User } from "@phosphor-icons/react";
 import { UserWorksSection } from "./elements/UserWorksSection";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type UserDetailPresentationProps = {
   id: string;
@@ -84,7 +85,9 @@ export const UserDetailPresentation = (props: UserDetailPresentationProps) => {
           ) : (
             <div>
               <h2 className="text-lg font-medium mb-4">投稿作品</h2>
-              <UserWorksSection userId={props.id} />
+              <Suspense fallback={<WorksLoadingFallback />}>
+                <UserWorksSection userId={props.id} />
+              </Suspense>
             </div>
           )}
         </div>
@@ -94,6 +97,27 @@ export const UserDetailPresentation = (props: UserDetailPresentationProps) => {
       <div className="mt-6 text-sm text-neutral-500 dark:text-neutral-400 text-right">
         ID: {props.id}
       </div>
+    </div>
+  );
+};
+
+// ローディング表示用のコンポーネント
+const WorksLoadingFallback = () => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {[...Array(4)].map((_, i) => (
+        <div key={i} className="border rounded-lg overflow-hidden">
+          <Skeleton className="h-40 w-full" />
+          <div className="p-4">
+            <Skeleton className="h-6 w-3/4 mb-2" />
+            <Skeleton className="h-4 w-1/2 mb-3" />
+            <div className="flex gap-2">
+              <Skeleton className="h-5 w-16 rounded-full" />
+              <Skeleton className="h-5 w-16 rounded-full" />
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
