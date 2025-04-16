@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { Suspense, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Calendar, User } from "@phosphor-icons/react";
@@ -16,7 +17,20 @@ type UserDetailPresentationProps = {
 };
 
 export const UserDetailPresentation = (props: UserDetailPresentationProps) => {
-  const [activeTab, setActiveTab] = useState<"profile" | "works">("profile");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const activeTab =
+    (searchParams.get("tab") as "profile" | "works") || "profile";
+
+  // タブ切り替え時にURLを更新
+  const setActiveTab = useCallback(
+    (tab: "profile" | "works") => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("tab", tab);
+      router.push(`?${params.toString()}`, { scroll: false });
+    },
+    [router, searchParams]
+  );
 
   // Format the joined date if available
   const formattedDate = props.joinedAt
