@@ -9,11 +9,11 @@ router = APIRouter()
 s3_client = boto3.client('s3', region_name='ap-northeast-3', endpoint_url='https://s3.ap-northeast-3.amazonaws.com')
 # エンドポイントを明示的に指定しないと勝手にリダイレクトして認証エラーが発生するので注意
 
-def generate_object_key(article_id: str, object_name: str) -> str:
+def generate_object_key(work_id: str, object_name: str) -> str:
     """
     S3オブジェクトキーを生成する
     """
-    return f"{article_id}/{object_name}"
+    return f"{work_id}/{object_name}"
 
 def handle_s3_error(e: ClientError, action: str):
     """
@@ -24,7 +24,7 @@ def handle_s3_error(e: ClientError, action: str):
 # ダウンロード用のpresigned URLを生成
 @router.post("/generate-download-url")
 def generate_download_url(request: S3ObjectRequest) -> dict:
-    object_key = generate_object_key(request.article_id, request.object_name)
+    object_key = generate_object_key(request.work_id, request.object_name)
     try:
         presigned_url = s3_client.generate_presigned_url(
             ClientMethod='get_object',
@@ -38,7 +38,7 @@ def generate_download_url(request: S3ObjectRequest) -> dict:
 # アップロード用のpresigned URLを生成
 @router.post("/generate-upload-url")
 def generate_upload_url(request: S3ObjectRequest) -> dict:
-    object_key = generate_object_key(request.article_id, request.object_name)
+    object_key = generate_object_key(request.work_id, request.object_name)
     try:
         presigned_url = s3_client.generate_presigned_url(
             ClientMethod='put_object',
@@ -64,7 +64,7 @@ def list_objects(bucket_name: str) -> dict:
 # S3バケットのオブジェクトを削除
 @router.delete("/delete-object")
 def delete_object(request: S3ObjectRequest) -> dict:
-    object_key = generate_object_key(request.article_id, request.object_name)
+    object_key = generate_object_key(request.work_id, request.object_name)
     try:
         s3_client.delete_object(Bucket=request.bucket_name, Key=object_key)
         return {"message": "オブジェクトが削除されました"}

@@ -1,15 +1,15 @@
 from app.cruds import CRUD
-from app.schemas.article import Article
+from app.schemas.work import Work
 
 
-class ArticleCRUD(CRUD[Article]):
-    table_name = "articles"
-    model_class = Article
+class WorkCRUD(CRUD[Work]):
+    table_name = "works"
+    model_class = Work
     id_length = 12
 
-    def get_user_articles(self, user_id: str) -> list[Article]:
+    def get_user_works(self, user_id: str) -> list[Work]:
         """
-        Get all articles for a specific user.
+        Get all works for a specific user.
         """
         try:
             response: dict = self.table.scan(
@@ -20,5 +20,5 @@ class ArticleCRUD(CRUD[Article]):
             items = response.get("Items", [])
             return [self.model_class.model_validate(item) for item in items]
         except Exception as e:
-            self._handle_db_error("get_user_articles", e)
+            self._handle_db_error("get_user_works", e)
         return []

@@ -5,82 +5,82 @@ from app.main import app
 client = TestClient(app)
 
 
-def test_get_articles():
-    response = client.get("/articles")
+def test_get_works():
+    response = client.get("/works")
     assert response.status_code == 200
 
 
-def test_get_article():
-    # First, create an article to get
+def test_get_work():
+    # First, create an work to get
     response = client.post(
-        "/articles",
+        "/works",
         json={
             "user_id": "Pytest",
-            "title": "article_to_get",
-            "content": "This is an article to get.",
+            "title": "work_to_get",
+            "content": "This is an work to get.",
         },
     )
     assert response.status_code == 201
-    article_id = response.json()["id"]
+    work_id = response.json()["id"]
 
-    # Get the article
-    response = client.get(f"/articles/{article_id}")
+    # Get the work
+    response = client.get(f"/works/{work_id}")
     assert response.status_code == 200
-    assert response.json()["title"] == "article_to_get"
+    assert response.json()["title"] == "work_to_get"
 
 
-def test_create_article():
+def test_create_work():
     response = client.post(
-        "/articles",
+        "/works",
         json={
             "user_id": "Pytest",
             "tags": ["test", "pytest", "fastapi"],
-            "title": "test_article",
-            "content": "This is a test article.",
+            "title": "test_work",
+            "content": "This is a test work.",
         },
     )
     assert response.status_code == 201
-    assert response.json()["title"] == "test_article"
+    assert response.json()["title"] == "test_work"
 
 
-def test_update_article():
-    # First, create an article to update
+def test_update_work():
+    # First, create an work to update
     response = client.post(
-        "/articles",
+        "/works",
         json={
             "user_id": "Pytest",
-            "title": "article_to_update",
-            "content": "This is an article to update.",
+            "title": "work_to_update",
+            "content": "This is an work to update.",
         },
     )
     assert response.status_code == 201
-    article_id = response.json()["id"]
+    work_id = response.json()["id"]
 
-    # Update the article
+    # Update the work
     response = client.put(
-        f"/articles/{article_id}",
+        f"/works/{work_id}",
         json={
-            "title": "updated_article",
-            "content": "This is an updated article.",
+            "title": "updated_work",
+            "content": "This is an updated work.",
         },
     )
     assert response.status_code == 200
-    assert response.json()["title"] == "updated_article"
+    assert response.json()["title"] == "updated_work"
 
 
-def test_delete_article():
-    # First, create an article to delete
+def test_delete_work():
+    # First, create an work to delete
     response = client.post(
-        "/articles",
+        "/works",
         json={
             "user_id": "Pytest",
-            "title": "article_to_delete",
-            "content": "This is an article to delete.",
+            "title": "work_to_delete",
+            "content": "This is an work to delete.",
         },
     )
     assert response.status_code == 201
-    article_id = response.json()["id"]
+    work_id = response.json()["id"]
 
-    # Delete the article
-    response = client.delete(f"/articles/{article_id}")
+    # Delete the work
+    response = client.delete(f"/works/{work_id}")
     assert response.status_code == 204
