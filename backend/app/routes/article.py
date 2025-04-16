@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import APIRouter
 
 from app.cruds.article import ArticleCRUD
@@ -10,7 +12,9 @@ route = Route(crud)
 
 
 @router.get("/")
-async def get_articles() -> list[Article]:
+async def get_articles(user_id: Optional[str] = None) -> list[Article]:
+    if user_id:
+        return crud.get_user_articles(user_id)
     return route.get_items()
 
 
@@ -32,11 +36,3 @@ async def update_article(article_id: str, article_update: ArticleUpdate) -> Arti
 @router.delete("/{article_id}", status_code=204)
 async def delete_article(article_id: str) -> None:
     route.delete_item(article_id)
-
-
-@router.get("/user/{user_id}")
-async def get_user_articles(user_id: str) -> list[Article]:
-    """
-    Get all articles for a specific user.
-    """
-    return crud.get_user_articles(user_id)
