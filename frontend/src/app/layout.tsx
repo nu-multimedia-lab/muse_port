@@ -21,21 +21,24 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="ja">
-      <body className={notoSansJP.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          {children}
-          <Footer />
-          <BetaBanner />
-        </ThemeProvider>
-      </body>
-    </html>
+    <>
+      <html lang="ja" suppressHydrationWarning>
+        <head />
+        <body className={notoSansJP.className}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Header />
+            {children}
+            <Footer />
+            <BetaBanner />
+          </ThemeProvider>
+        </body>
+      </html>
+    </>
   );
 };
 
