@@ -2,7 +2,8 @@ import Loading from "@/app/works/[workId]/loading";
 import { ArticleDetailContainer } from "@/components/pages/articles/ArticleDetailContainer";
 import { Suspense } from "react";
 
-const WorkPage = ({ params }: { params: { workId: string } }) => {
+const WorkPage = async (props: { params: Promise<{ workId: string }> }) => {
+  const params = await props.params;
   const workId: string = params.workId;
 
   return (

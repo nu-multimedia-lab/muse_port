@@ -2,7 +2,8 @@ import Loading from "@/app/members/[userId]/loading";
 import { UserDetailContainer } from "@/components/pages/members/UserDetailContainer";
 import { Suspense } from "react";
 
-const MemberPage = ({ params }: { params: { userId: string } }) => {
+const MemberPage = async (props: { params: Promise<{ userId: string }> }) => {
+  const params = await props.params;
   const userId: string = params.userId;
 
   return (
