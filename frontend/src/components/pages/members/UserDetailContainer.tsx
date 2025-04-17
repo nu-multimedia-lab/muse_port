@@ -17,7 +17,7 @@ export const UserDetailContainer = async ({
       username={user.username}
       bio={user.bio ?? null}
       imgSrc={undefined}
-      joinedAt={new Date(user.created_at)}
+      joinedAt={user.created_at} // Date変換せず文字列のまま渡す
     />
   );
 };

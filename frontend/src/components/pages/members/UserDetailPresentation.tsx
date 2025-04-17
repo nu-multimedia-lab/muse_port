@@ -6,13 +6,14 @@ import { UserProfileHeader } from "./elements/UserProfileHeader";
 import { ProfileTabs } from "./elements/ProfileTabs";
 import { UserWorksSection } from "./elements/UserWorksSection";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ISODateString } from "@/lib/types";
 
 type UserDetailPresentationProps = {
   id: string;
   username: string;
   bio: string | null;
   imgSrc: string | undefined;
-  joinedAt?: Date;
+  joinedAt?: ISODateString;
 };
 
 export const UserDetailPresentation = (props: UserDetailPresentationProps) => {

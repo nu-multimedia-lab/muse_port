@@ -1,14 +1,18 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { Calendar, User } from "@phosphor-icons/react/dist/ssr";
+import { useEffect, useState } from "react";
+import { ISODateString } from "@/lib/types";
 
 type ArticleHeaderProps = {
   title: string;
   authorId: string;
   authorName: string;
   authorImgSrc?: string;
-  createdAt: Date;
+  createdAt: ISODateString; // Date型ではなく文字列型として定義
   tags: string[] | null;
 };
 
@@ -17,12 +21,20 @@ type ArticleHeaderProps = {
  * タイトル、著者情報、投稿日、タグを表示
  */
 export const ArticleHeader = (props: ArticleHeaderProps) => {
-  // Format the date for display
-  const formattedDate = new Date(props.createdAt).toLocaleDateString("ja-JP", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const [formattedDate, setFormattedDate] = useState<string>("");
+
+  useEffect(() => {
+    // Format the date for display - only on client side
+    if (props.createdAt) {
+      setFormattedDate(
+        new Date(props.createdAt).toLocaleDateString("ja-JP", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })
+      );
+    }
+  }, [props.createdAt]);
 
   return (
     <div className="mb-10">

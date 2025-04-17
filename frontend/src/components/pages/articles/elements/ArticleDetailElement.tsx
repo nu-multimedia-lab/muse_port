@@ -1,13 +1,14 @@
 import { ArticleHeader } from "./ArticleHeader";
 import { ArticleContent } from "./ArticleContent";
 import { ArticleFooter } from "./ArticleFooter";
+import { ISODateString } from "@/lib/types";
 
 type ArticleDetailProps = {
   id: string;
   title: string;
   content: string;
   tags: string[] | null;
-  createdAt: Date;
+  createdAt: ISODateString; // Date型ではなく文字列型に変更
   authorId: string;
   authorName: string;
   authorImgSrc?: string;

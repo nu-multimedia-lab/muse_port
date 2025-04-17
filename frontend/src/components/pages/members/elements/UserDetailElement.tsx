@@ -2,13 +2,14 @@ import { useState } from "react";
 import { UserProfileHeader } from "./UserProfileHeader";
 import { ProfileTabs } from "./ProfileTabs";
 import { UserWorksSection } from "./UserWorksSection";
+import { ISODateString } from "@/lib/types";
 
 type UserDetailProps = {
   id: string;
   username: string;
   bio: string | null;
   imgSrc: string | undefined;
-  joinedAt?: Date;
+  joinedAt?: ISODateString;
 };
 
 /**

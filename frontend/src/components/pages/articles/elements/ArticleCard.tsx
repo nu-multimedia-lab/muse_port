@@ -1,6 +1,10 @@
+"use client";
+
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Cube, User } from "@phosphor-icons/react/dist/ssr";
+import { useEffect, useState } from "react";
+import { ISODateString } from "@/lib/types";
 
 type ArticleCardProps = {
   id: string;
@@ -8,16 +12,22 @@ type ArticleCardProps = {
   title: string;
   tags: string[] | null;
   content: string;
-  createdAt: Date;
+  createdAt: ISODateString; // Date型ではなく文字列型に変更
 };
 
 export const ArticleCard = (props: ArticleCardProps) => {
-  // Format the date for display
-  const formattedDate = new Date(props.createdAt).toLocaleDateString("ja-JP", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const [formattedDate, setFormattedDate] = useState<string>("");
+
+  useEffect(() => {
+    // Format the date for display - only on client side
+    setFormattedDate(
+      new Date(props.createdAt).toLocaleDateString("ja-JP", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    );
+  }, [props.createdAt]);
 
   return (
     <div className="flex flex-col h-full overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-sm hover:shadow-md transition-all duration-300">

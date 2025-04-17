@@ -20,7 +20,7 @@ export const ArticleListPresentation = ({
               title={article.title}
               tags={article.tags ?? null}
               content={article.content}
-              createdAt={new Date(article.created_at)}
+              createdAt={article.created_at} // Date変換せず文字列のまま渡す
             />
           </Link>
         ))}
