@@ -1,9 +1,7 @@
 "use client";
 
-import { Suspense, useCallback } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { UserProfileHeader } from "./elements/UserProfileHeader";
-import { ProfileTabs } from "./elements/ProfileTabs";
 import { UserWorksSection } from "./elements/UserWorksSection";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ISODateString } from "@/lib/types";
@@ -17,49 +15,6 @@ type UserDetailPresentationProps = {
 };
 
 export const UserDetailPresentation = (props: UserDetailPresentationProps) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const activeTab =
-    (searchParams.get("tab") as "profile" | "works") || "profile";
-
-  // タブ切り替え時にURLを更新
-  const setActiveTab = useCallback(
-    (tab: "profile" | "works") => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set("tab", tab);
-      router.push(`?${params.toString()}`, { scroll: false });
-    },
-    [router, searchParams]
-  );
-
-  // タブコンテンツを定義
-  const tabs = [
-    {
-      id: "profile",
-      label: "プロフィール",
-      content: (
-        <div>
-          <h2 className="text-lg font-medium mb-3">自己紹介</h2>
-          <p className="whitespace-pre-line text-neutral-700 dark:text-neutral-300 leading-relaxed">
-            {props.bio == null ? "記述なし" : props.bio}
-          </p>
-        </div>
-      ),
-    },
-    {
-      id: "works",
-      label: "投稿作品",
-      content: (
-        <div>
-          <h2 className="text-lg font-medium mb-4">投稿作品</h2>
-          <Suspense fallback={<WorksLoadingFallback />}>
-            <UserWorksSection userId={props.id} />
-          </Suspense>
-        </div>
-      ),
-    },
-  ];
-
   return (
     <div className="w-full max-w-3xl mx-auto">
       {/* ヘッダー情報 */}
@@ -70,12 +25,21 @@ export const UserDetailPresentation = (props: UserDetailPresentationProps) => {
         joinedAt={props.joinedAt}
       />
 
-      {/* メイン情報とタブ */}
-      <ProfileTabs
-        activeTab={activeTab}
-        onTabChange={(tab) => setActiveTab(tab as "profile" | "works")}
-        tabs={tabs}
-      />
+      {/* プロフィール情報 */}
+      <div className="mb-12 border rounded-lg p-6 bg-white dark:bg-neutral-900">
+        <h2 className="text-xl font-medium mb-4">自己紹介</h2>
+        <p className="whitespace-pre-line text-neutral-700 dark:text-neutral-300 leading-relaxed">
+          {props.bio == null ? "記述なし" : props.bio}
+        </p>
+      </div>
+
+      {/* 投稿作品 */}
+      <div className="border rounded-lg p-6 bg-white dark:bg-neutral-900">
+        <h2 className="text-xl font-medium mb-6">投稿作品</h2>
+        <Suspense fallback={<WorksLoadingFallback />}>
+          <UserWorksSection userId={props.id} />
+        </Suspense>
+      </div>
 
       {/* フッター情報 */}
       <div className="mt-6 text-sm text-neutral-500 dark:text-neutral-400 text-right">

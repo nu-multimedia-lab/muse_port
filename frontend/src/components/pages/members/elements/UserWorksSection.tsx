@@ -37,7 +37,7 @@ export const UserWorksSection = async ({ userId }: UserWorksSectionProps) => {
             title={article.title}
             tags={article.tags ?? null}
             content={article.content}
-            createdAt={new Date(article.created_at)}
+            createdAt={article.created_at}
           />
         </Link>
       ))}
