@@ -7,6 +7,7 @@ class WorkCRUD(CRUD[Work]):
     model_class = Work
     id_length = 12
 
+    # ユーザーの処理をworkに書いてるのはおかしいのでユーザーへ移動。後でやる
     def get_user_works(self, user_id: str) -> list[Work]:
         """
         Get all works for a specific user.

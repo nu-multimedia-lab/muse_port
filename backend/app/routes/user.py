@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
 from app.cruds.user import UserCRUD
 from app.routes import Route
@@ -32,3 +32,15 @@ async def update_user(user_id: str, user_update: UserUpdate) -> User:
 @router.delete("/{user_id}", status_code=204)
 async def delete_user(user_id: str) -> None:
     route.delete_item(user_id)
+
+# 後でやる
+@router.get("/{user_id}/works", status_code=200)
+async def get_user_works(user_id: str) -> list[str]:
+    """
+    Get all works for a specific user.
+    """
+    try:
+        works = crud.get_user_works(user_id)
+        return {"works": works}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
