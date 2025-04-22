@@ -11,8 +11,16 @@ route = Route(crud)
 s3 = S3Handler(bucket_name="museport-media-bucket") # バケット名は環境変数から取得するように変更が必要
 
 @router.get("/")
-async def get_works() -> list[Work]:
-    return route.get_items()
+async def get_works(
+    user_id: str = None,
+    tag: str = None,
+) -> list[Work]:
+    all_works = route.get_items()
+    if user_id:
+        all_works = [work for work in all_works if work.user_id == user_id]
+    if tag:
+        all_works = [work for work in all_works if tag in (work.tags or [])] # タグがNoneの場合も考慮
+    return all_works
 
 
 @router.post("/", status_code=201)
