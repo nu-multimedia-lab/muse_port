@@ -1,5 +1,13 @@
 # Database Configuration
 
+---
+
+## **THIS DOCS IS DEPRECATED**
+
+## **PLEASE REFER TO `DB_docs.md`**
+
+---
+
 ## USERS
 
 - id (PK)

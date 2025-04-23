@@ -32,13 +32,28 @@
 
 タグで記事を検索するためのインデックステーブル。
 
-| 属性名       | 型     | 説明                            |
-|--------------|--------|---------------------------------|
-| `tag`        | string | タグ名（※PK）                  |
-| `work_id` | string | 該当記事ID（※ソートキー）         |
-| `created_at` | string | 作品作成日時（並び替えに使用）  |
+| 属性名               | 型     | 説明                                   |
+|----------------------|--------|----------------------------------------|
+| `tag`                | string | タグ名（※PK）                         |
+| `created_at#work_id` | string | 作品作成日時（一意性のためにwork_idも）|
+| `work_id`            | string | 該当記事ID                             |
 
-> **Query例**：`tag = "music"` でクエリすると `"music"` タグのすべての記事IDを取得できる。
+> **Query例**：`tag = "music"` でクエリすると `"music"` を持っているすべての記事IDを取得できる。
+
+---
+
+### Table: `users`
+
+| 属性名 | 型 | 説明 |
+|--------|----|------|
+|`id`         | string | PK   |
+|`discord_id` | string | discordのユーザーID|
+|`usersname`  | string | 表示名 |
+|`bio`        | string ||
+|`created_at`|||
+|`updated_at`|||
+
+
 
 ---
 
