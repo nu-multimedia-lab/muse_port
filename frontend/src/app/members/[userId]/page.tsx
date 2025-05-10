@@ -1,17 +1,17 @@
 import Loading from "@/app/members/[userId]/loading";
-import { MemberDetail } from "@/app/members/[userId]/MemberDetail";
-import React, { Suspense } from "react";
+import { UserDetailContainer } from "@/components/pages/members/UserDetailContainer";
+import { Suspense } from "react";
 
-const MemberPage = ({ params }: { params: { userId: string } }) => {
+const MemberPage = async (props: { params: Promise<{ userId: string }> }) => {
+  const params = await props.params;
   const userId: string = params.userId;
 
   return (
     <div className="min-h-screen py-32">
       <div className="flex flex-col gap-8">
-        <h1 className="text-4xl font-extrabold mx-auto">Member Detail</h1>
-        <div className="mx-auto min-w-[720px]">
+        <div className="mx-auto w-full max-w-3xl px-4">
           <Suspense fallback={<Loading />}>
-            <MemberDetail userId={userId} />
+            <UserDetailContainer userId={userId} />
           </Suspense>
         </div>
       </div>

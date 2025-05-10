@@ -1,9 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
-import { Header } from "@/components/layouts/Header";
-import { Footer } from "@/components/layouts/Footer";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import BetaBanner from "@/components/common/BetaBanner";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
@@ -20,20 +21,24 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="ja">
-      <body className={notoSansJP.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          {children}
-          <Footer />
-        </ThemeProvider>
-      </body>
-    </html>
+    <>
+      <html lang="ja" suppressHydrationWarning>
+        <head />
+        <body className={notoSansJP.className}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Header />
+            {children}
+            <Footer />
+            <BetaBanner />
+          </ThemeProvider>
+        </body>
+      </html>
+    </>
   );
 };
 
