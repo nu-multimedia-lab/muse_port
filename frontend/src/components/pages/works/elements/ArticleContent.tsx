@@ -1,6 +1,6 @@
 import React from "react";
 
-type ArticleContentProps = {
+type WorkContentProps = {
   content: string;
 };
 
@@ -8,9 +8,9 @@ type ArticleContentProps = {
  * 記事本文を表示するコンポーネント
  * テキストを段落に分けて表示します
  */
-export const ArticleContent = (props: ArticleContentProps) => {
+export const WorkContent: React.FC<WorkContentProps> = ({ content }) => {
   // Process content for display (split by paragraphs)
-  const paragraphs = props.content.split("\n").filter((p) => p.trim() !== "");
+  const paragraphs = content.split("\n").filter((p) => p.trim() !== "");
 
   return (
     <article className="prose dark:prose-invert max-w-none mb-16">

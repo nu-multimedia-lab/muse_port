@@ -1,9 +1,9 @@
-import { ArticleHeader } from "./ArticleHeader";
-import { ArticleContent } from "./ArticleContent";
-import { ArticleFooter } from "./ArticleFooter";
+import { WorkContent } from "./ArticleContent";
+import { WorkFooter } from "./ArticleFooter";
+import { WorkHeader } from "./ArticleHeader";
 import { ISODateString } from "@/lib/types";
 
-type ArticleDetailProps = {
+type WorkDetailElementProps = {
   id: string;
   title: string;
   content: string;
@@ -18,24 +18,33 @@ type ArticleDetailProps = {
  * 記事詳細を表示するエレメントコンポーネント
  * ヘッダー、本文、フッターに分割して表示します
  */
-export const ArticleDetailElement = (props: ArticleDetailProps) => {
+export const WorkDetailElement: React.FC<WorkDetailElementProps> = ({
+  id,
+  title,
+  content,
+  tags,
+  createdAt,
+  authorId,
+  authorName,
+  authorImgSrc,
+}) => {
   return (
     <div className="w-full max-w-3xl mx-auto">
       {/* 記事ヘッダー */}
-      <ArticleHeader
-        title={props.title}
-        authorId={props.authorId}
-        authorName={props.authorName}
-        authorImgSrc={props.authorImgSrc}
-        createdAt={props.createdAt}
-        tags={props.tags}
+      <WorkHeader
+        title={title}
+        authorId={authorId}
+        authorName={authorName}
+        authorImgSrc={authorImgSrc}
+        createdAt={createdAt}
+        tags={tags}
       />
 
       {/* 記事本文 */}
-      <ArticleContent content={props.content} />
+      <WorkContent content={content} />
 
       {/* フッターナビゲーション */}
-      <ArticleFooter id={props.id} />
+      <WorkFooter />
     </div>
   );
 };

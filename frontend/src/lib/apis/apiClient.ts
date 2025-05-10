@@ -111,7 +111,7 @@ export const apiClient = createApiClient();
 // APIパスをエンドポイント別に定義
 export const API_ENDPOINTS = {
   USERS: "/users",
-  ARTICLES: "/articles",
+  WORKS: "/works",
 };
 
 // 汎用的なAPI関数

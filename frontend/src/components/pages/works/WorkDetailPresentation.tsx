@@ -1,9 +1,9 @@
-import { ArticleHeader } from "./elements/ArticleHeader";
-import { ArticleContent } from "./elements/ArticleContent";
-import { ArticleFooter } from "./elements/ArticleFooter";
+import { WorkHeader } from "./elements/WorkHeader";
+import { WorkContent } from "./elements/WorkContent";
+import { WorkFooter } from "./elements/WorkFooter";
 import { ISODateString } from "@/lib/types";
 
-type ArticleDetailPresentationProps = {
+type WorkDetailPresentationProps = {
   id: string;
   title: string;
   content: string;
@@ -15,16 +15,14 @@ type ArticleDetailPresentationProps = {
 };
 
 /**
- * 記事詳細のプレゼンテーションコンポーネント
+ * 作品詳細のプレゼンテーションコンポーネント
  * データを受け取り、適切に表示します
  */
-export const ArticleDetailPresentation = (
-  props: ArticleDetailPresentationProps
-) => {
+export const WorkDetailPresentation = (props: WorkDetailPresentationProps) => {
   return (
     <div className="w-full max-w-3xl mx-auto">
-      {/* 記事ヘッダー */}
-      <ArticleHeader
+      {/* 作品ヘッダー */}
+      <WorkHeader
         title={props.title}
         authorId={props.authorId}
         authorName={props.authorName}
@@ -33,11 +31,11 @@ export const ArticleDetailPresentation = (
         tags={props.tags}
       />
 
-      {/* 記事本文 */}
-      <ArticleContent content={props.content} />
+      {/* 作品本文 */}
+      <WorkContent content={props.content} />
 
       {/* フッターナビゲーション */}
-      <ArticleFooter id={props.id} />
+      <WorkFooter id={props.id} />
     </div>
   );
 };

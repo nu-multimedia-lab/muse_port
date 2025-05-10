@@ -7,7 +7,7 @@ import { Calendar, User } from "@phosphor-icons/react/dist/ssr";
 import { useEffect, useState } from "react";
 import { ISODateString } from "@/lib/types";
 
-type ArticleHeaderProps = {
+type WorkHeaderProps = {
   title: string;
   authorId: string;
   authorName: string;
@@ -17,46 +17,53 @@ type ArticleHeaderProps = {
 };
 
 /**
- * 記事詳細のヘッダー部分を表示するコンポーネント
+ * 作品詳細のヘッダー部分を表示するコンポーネント
  * タイトル、著者情報、投稿日、タグを表示
  */
-export const ArticleHeader = (props: ArticleHeaderProps) => {
+export const WorkHeader: React.FC<WorkHeaderProps> = ({
+  title,
+  authorId,
+  authorName,
+  authorImgSrc,
+  createdAt,
+  tags,
+}) => {
   const [formattedDate, setFormattedDate] = useState<string>("");
 
   useEffect(() => {
     // Format the date for display - only on client side
-    if (props.createdAt) {
+    if (createdAt) {
       setFormattedDate(
-        new Date(props.createdAt).toLocaleDateString("ja-JP", {
+        new Date(createdAt).toLocaleDateString("ja-JP", {
           year: "numeric",
           month: "long",
           day: "numeric",
         })
       );
     }
-  }, [props.createdAt]);
+  }, [createdAt]);
 
   return (
     <div className="mb-10">
-      <h1 className="text-3xl font-bold mb-6 leading-tight">{props.title}</h1>
+      <h1 className="text-3xl font-bold mb-6 leading-tight">{title}</h1>
 
       <div className="flex items-center mb-4">
         <Link
-          href={`/members/${props.authorId}`}
+          href={`/members/${authorId}`}
           className="flex items-center gap-3 group"
         >
           <Avatar className="h-12 w-12">
-            <AvatarImage src={props.authorImgSrc} />
+            <AvatarImage src={authorImgSrc} />
             <AvatarFallback className="text-sm uppercase">
               <User size={24} />
             </AvatarFallback>
           </Avatar>
           <div>
             <p className="font-medium group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-              {props.authorName}
+              {authorName}
             </p>
             <p className="text-sm text-neutral-500 dark:text-neutral-400">
-              @{props.authorId}
+              @{authorId}
             </p>
           </div>
         </Link>
@@ -70,9 +77,9 @@ export const ArticleHeader = (props: ArticleHeaderProps) => {
       </div>
 
       {/* タグ */}
-      {props.tags && props.tags.length > 0 && (
+      {tags && tags.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-6">
-          {props.tags.map((tag) => (
+          {tags.map((tag) => (
             <Badge
               key={tag}
               variant="outline"

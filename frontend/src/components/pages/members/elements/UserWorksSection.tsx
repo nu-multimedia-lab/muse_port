@@ -1,6 +1,6 @@
-import { ArticleCard } from "@/components/pages/articles/elements/ArticleCard";
-import { getArticlesByUserId } from "@/lib/apis/article";
-import { Article } from "@/lib/types";
+import { WorkCard } from "@/components/pages/works/elements/WorkCard";
+import { getWorksByUserId } from "@/lib/apis/work";
+import { Work } from "@/lib/types";
 import Link from "next/link";
 
 type UserWorksSectionProps = {
@@ -8,36 +8,35 @@ type UserWorksSectionProps = {
 };
 
 export const UserWorksSection = async ({ userId }: UserWorksSectionProps) => {
-  let articles: Article[] = [];
+  let works: Work[] = [];
 
   try {
-    const fetchedArticles = await getArticlesByUserId(userId);
-    articles = fetchedArticles;
+    const fetchedWorks = await getWorksByUserId(userId);
+    works = fetchedWorks;
   } catch (error) {
     console.error(`Failed to fetch works for user ${userId}:`, error);
   }
 
-  if (articles.length === 0) {
+  if (works.length === 0) {
     return (
-      <div className="text-center py-12">
+      <div className="text-center py-10">
         <p className="text-neutral-500 dark:text-neutral-400">
-          投稿した作品がありません
+          まだ投稿された作品はありません。
         </p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {articles.map((article) => (
-        <Link key={article.id} href={`/works/${article.id}`}>
-          <ArticleCard
-            id={article.id}
-            userId={article.user_id}
-            title={article.title}
-            tags={article.tags ?? null}
-            content={article.content}
-            createdAt={article.created_at}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {works.map((work) => (
+        <Link key={work.id} href={`/works/${work.id}`}>
+          <WorkCard
+            id={work.id}
+            userId={work.user_id}
+            title={work.title}
+            tags={work.tags ?? null}
+            createdAt={work.created_at}
           />
         </Link>
       ))}

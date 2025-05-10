@@ -40,9 +40,9 @@ export interface UserUpdate {
 }
 
 /**
- * 記事モデル
+ * 作品モデル
  */
-export interface Article extends BaseModel {
+export interface Work extends BaseModel {
   user_id: string;
   title: string;
   content: string;
@@ -51,9 +51,9 @@ export interface Article extends BaseModel {
 }
 
 /**
- * 記事作成時のデータ
+ * 作品作成時のデータ
  */
-export interface ArticleCreate {
+export interface WorkCreate {
   user_id: string;
   title: string;
   content: string;
@@ -62,9 +62,9 @@ export interface ArticleCreate {
 }
 
 /**
- * 記事更新時のデータ
+ * 作品更新時のデータ
  */
-export interface ArticleUpdate {
+export interface WorkUpdate {
   title?: string;
   content?: string;
   tags?: string[];

@@ -6,7 +6,7 @@ import { Cube, User } from "@phosphor-icons/react/dist/ssr";
 import { useEffect, useState } from "react";
 import { ISODateString } from "@/lib/types";
 
-type ArticleCardProps = {
+type WorkCardProps = {
   id: string;
   userId: string;
   title: string;
@@ -15,19 +15,19 @@ type ArticleCardProps = {
   createdAt: ISODateString; // Date型ではなく文字列型に変更
 };
 
-export const ArticleCard = (props: ArticleCardProps) => {
+export const WorkCard: React.FC<WorkCardProps> = ({ work, user }) => {
   const [formattedDate, setFormattedDate] = useState<string>("");
 
   useEffect(() => {
     // Format the date for display - only on client side
     setFormattedDate(
-      new Date(props.createdAt).toLocaleDateString("ja-JP", {
+      new Date(work.createdAt).toLocaleDateString("ja-JP", {
         year: "numeric",
         month: "long",
         day: "numeric",
       })
     );
-  }, [props.createdAt]);
+  }, [work.createdAt]);
 
   return (
     <div className="flex flex-col h-full overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-sm hover:shadow-md transition-all duration-300">
@@ -41,13 +41,13 @@ export const ArticleCard = (props: ArticleCardProps) => {
       {/* コンテンツエリア - 残りの高さを占める */}
       <div className="flex flex-col flex-grow p-5">
         {/* タイトルのみ表示 - 常に2行まで表示 */}
-        <h3 className="text-xl font-bold mb-3 break-words">{props.title}</h3>
+        <h3 className="text-xl font-bold mb-3 break-words">{work.title}</h3>
 
         {/* タグエリア - タグが存在しない場合は「タグ未設定」と表示 */}
         <div className="mb-4">
           <div className="flex flex-wrap gap-2">
-            {props.tags && props.tags.length > 0 ? (
-              props.tags.map((tag) => (
+            {work.tags && work.tags.length > 0 ? (
+              work.tags.map((tag) => (
                 <Badge key={tag} variant="secondary" className="text-xs">
                   {tag}
                 </Badge>
@@ -69,7 +69,7 @@ export const ArticleCard = (props: ArticleCardProps) => {
             </AvatarFallback>
           </Avatar>
           <div>
-            <div className="text-sm font-medium">@{props.userId}</div>
+            <div className="text-sm font-medium">@{user.id}</div>
             <div className="text-xs text-neutral-500">{formattedDate}</div>
           </div>
         </div>

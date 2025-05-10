@@ -1,7 +1,7 @@
 import Loading from "@/app/works/loading";
 import { Suspense } from "react";
 import { Cube } from "@phosphor-icons/react/dist/ssr";
-import { ArticleListContainer } from "@/components/pages/articles/ArticleListContainer";
+import { WorkListContainer } from "@/components/pages/works/WorkListContainer";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +17,7 @@ const WorksPage = () => {
             </h1>
           </div>
           <Suspense fallback={<Loading />}>
-            <ArticleListContainer />
+            <WorkListContainer />
           </Suspense>
         </div>
       </div>

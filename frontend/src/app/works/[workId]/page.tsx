@@ -1,5 +1,5 @@
-import Loading from "@/app/works/[workId]/loading";
-import { ArticleDetailContainer } from "@/components/pages/articles/ArticleDetailContainer";
+import Loading from "./loading";
+import { WorkDetailContainer } from "@/components/pages/works/WorkDetailContainer";
 import { Suspense } from "react";
 
 const WorkPage = async (props: { params: Promise<{ workId: string }> }) => {
@@ -11,7 +11,7 @@ const WorkPage = async (props: { params: Promise<{ workId: string }> }) => {
       <div className="flex flex-col gap-8">
         <div className="mx-auto w-full max-w-3xl px-4">
           <Suspense fallback={<Loading />}>
-            <ArticleDetailContainer workId={workId} />
+            <WorkDetailContainer workId={workId} />
           </Suspense>
         </div>
       </div>
