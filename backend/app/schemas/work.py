@@ -4,7 +4,7 @@ from typing import Optional
 from pydantic import BaseModel, field_serializer
 
 
-class Article(BaseModel):
+class Work(BaseModel):
     id: str  # PK
     user_id: str  # FK
     created_at: datetime
@@ -19,14 +19,14 @@ class Article(BaseModel):
         return value.isoformat(timespec="seconds")
 
 
-class ArticleCreate(BaseModel):
+class WorkCreate(BaseModel):
     user_id: str
     title: str
     tags: Optional[list[str]] = None
     content: str
 
 
-class ArticleUpdate(BaseModel):
+class WorkUpdate(BaseModel):
     title: Optional[str] = None
     tags: Optional[list[str]] = None
     content: Optional[str] = None
